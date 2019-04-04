@@ -26,7 +26,11 @@
         <tr>
             <td>{{$article->id}}</td>
             <td>{{$article->title}}</td>
-            <td>{{$article->description}}</td>
+            <td id={{$article->id}}>{{$article->description}}</td>
+            <script type="text/javascript">
+              var id = @json($article->id);
+              document.getElementById(id).innerHTML = @json($article->description); 
+            </script>
             <td><a href="{{ route('articles.edit',$article->id)}}" class="btn btn-primary">Edit</a></td>
             <td>
                 <form action="{{ route('articles.destroy', $article->id)}}" method="post">
