@@ -5,7 +5,7 @@
 
 <div class="d-flex" id="wrapper">
 <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="sidebar-heading"><center><img  width = 170px src="{{ URL::asset('img/saica.jpg') }}"></center></div>
       <div class="list-group list-group-flush">
         <a href="{{route('articles.index')}}" class="list-group-item list-group-item-action bg-light">Home</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
@@ -71,5 +71,6 @@
       </form>
     </div>
   </div>
+</div>
 </div>
 @endsection
