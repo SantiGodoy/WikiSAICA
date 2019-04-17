@@ -11,8 +11,17 @@
 |
 */
 
-Route::get('/', function () {
+
+
+Auth::routes();;
+
+Route::group( ['middleware' => 'auth' ], function()
+{
+	Route::get('/', function () {
     return view('index');
 });
-
-Route::resource('articles', 'ArticleController');
+    Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('admin/ajuda', 'AdminController@ajuda');
+    Route::resource('articles', 'ArticleController');
+});
