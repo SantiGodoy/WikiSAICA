@@ -43,11 +43,24 @@
                         @csrf
                         <div class="form-group">
                             <label for="name">Article Name:</label>
-                            <input type="text" class="form-control" name="article_title" value={{ $article->title }} />
+                            <input type="text" class="form-control" name="article_title" value="{{ $article->title }}"/>
                         </div>
                         <div class="form-group">
                             <label for="price">Article Description :</label>
-                            <input type="text" class="form-control" name="article_description" value={{ $article->description }} />
+                            <textarea style="width: 100%;" id ="article_description" name="article_description"></textarea><br/>
+                                <script>
+                                    CKEDITOR.replace('article_description', {
+                                    fullPage: false,
+                                    extraPlugins: 'docprops',
+                                    // Disable content filtering because if you use full page mode, you probably
+                                    // want to  freely enter any HTML content in source mode without any limitations.
+                                    allowedContent: true,
+                                    height: 350
+                                    });
+                                </script>
+                                <script>  
+                                    CKEDITOR.instances['article_description'].setData(@json($article->description));  
+                                </script>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>

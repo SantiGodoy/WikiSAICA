@@ -15,8 +15,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
-
-        return view('articles.index', compact('articles'));
+        return view('articles.index', compact('articles', 'user'));
     }
 
     /**
@@ -57,7 +56,9 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        $article = Article::find($id);
+
+        return view('articles.show_article', compact('article'));
     }
 
     /**

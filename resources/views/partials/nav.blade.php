@@ -5,4 +5,7 @@
     <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
     <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
     <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+    @if ((Auth::user()->role) == "admin")
+    <a href="#" class="list-group-item list-group-item-action bg-light">Admin</a>
+    @endif
 </div>

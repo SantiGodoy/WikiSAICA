@@ -33,7 +33,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <td>ID</td>
                             <td>Article Title</td>
                             <td>Article Description</td>
                             <td colspan="2">Action</td>
@@ -42,8 +41,7 @@
                     <tbody>
                         @foreach($articles as $article)
                         <tr>
-                            <td>{{$article->id}}</td>
-                            <td>{{$article->title}}</td>
+                            <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
                             <td id={{$article->id}}>{{$article->description}}</td>
                             <script type="text/javascript">
                                 var id = @json($article->id);
