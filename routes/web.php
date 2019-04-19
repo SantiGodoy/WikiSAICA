@@ -26,3 +26,8 @@ Route::group( ['middleware' => 'auth' ], function()
     Route::get('admin/ajuda', 'AdminController@ajuda');
     Route::resource('articles', 'ArticleController');
 });
+
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
+{
+	Route::resource('admin', 'AdminController');
+});
