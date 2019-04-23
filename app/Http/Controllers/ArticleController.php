@@ -58,9 +58,11 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::find($id);
-
-        return view('articles.show_article', compact('article'));
+        $article = DB::table('articles')->where('id', $id)->where('allowed', 'true')->first();
+        if($article != null)
+            return view('articles.show_article', compact('article'));
+        else
+            return redirect('');
     }
 
     /**
