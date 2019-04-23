@@ -1,4 +1,3 @@
-@extends('layout')
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,6 +6,7 @@
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
     </head>
@@ -22,51 +22,52 @@
                 }
             </style>
 
-            @section('content')
-            <div class="card uper">
-                <div class="card-header">
-                    Edit Articles
-                </div>
-                <div class="card-body">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+            <div class="container">
+                <div class="card uper">
+                    <div class="card-header">
+                        Edit Articles
                     </div>
-                    <br>
-                    @endif
-                    <form method="post" action="{{ route('articles.update', $article->id) }}">
-                        @method('PATCH')
-                        @csrf
-                        <div class="form-group">
-                            <label for="name">Article Name:</label>
-                            <input type="text" class="form-control" name="article_title" value="{{ $article->title }}"/>
+                    <div class="card-body">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <div class="form-group">
-                            <label for="price">Article Description :</label>
-                            <textarea style="width: 100%;" id ="article_description" name="article_description"></textarea><br/>
-                                <script>
-                                    CKEDITOR.replace('article_description', {
-                                    fullPage: false,
-                                    extraPlugins: 'docprops',
-                                    // Disable content filtering because if you use full page mode, you probably
-                                    // want to  freely enter any HTML content in source mode without any limitations.
-                                    allowedContent: true,
-                                    height: 350
-                                    });
-                                </script>
-                                <script>  
-                                    CKEDITOR.instances['article_description'].setData(@json($article->description));  
-                                </script>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
+                        <br>
+                        @endif
+                        <form method="post" action="{{ route('articles.update', $article->id) }}">
+                            @method('PATCH')
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Article Name:</label>
+                                <input type="text" class="form-control" name="article_title" value="{{ $article->title }}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Article Description :</label>
+                                <textarea style="width: 100%;" id ="article_description" name="article_description"></textarea><br/>
+                                    <script>
+                                        CKEDITOR.replace('article_description', {
+                                        fullPage: false,
+                                        extraPlugins: 'docprops',
+                                        // Disable content filtering because if you use full page mode, you probably
+                                        // want to  freely enter any HTML content in source mode without any limitations.
+                                        allowedContent: true,
+                                        height: 350
+                                        });
+                                    </script>
+                                    <script>  
+                                        CKEDITOR.instances['article_description'].setData(@json($article->description));  
+                                    </script>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            
         </div>
-        @endsection
     </body>
 </html>

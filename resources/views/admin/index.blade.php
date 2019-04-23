@@ -1,4 +1,3 @@
-@extends('layout')
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,6 +6,7 @@
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
     </head>
@@ -22,48 +22,46 @@
                 }
             </style>
 
-             @section('content')
-            <div class="uper">
-                @if(session()->get('success'))
-                <div class="alert alert-success">
-                    {{ session()->get('success') }}  
-                </div>
-                <br>
-                @endif
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>Article Title</td>
-                            <td>Article Description</td>
-                            <td colspan="2">Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($articles as $article)
-                        <tr>
-                            <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
-                            <td id={{$article->id}}>{{$article->description}}</td>
-                            <script type="text/javascript">
-                                var id = @json($article->id);
-                                document.getElementById(id).innerHTML = @json($article->description); 
-                            </script>
-                            <td><a href="{{ route('admin.edit',$article->id)}}" class="btn btn-primary">Permitir</a></td>
-                            <td>
-                                <form action="{{ route('articles.destroy', $article->id)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            <div>
+            <div class="container">
+                <div class="uper">
+                    @if(session()->get('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}  
+                    </div>
+                    <br>
+                    @endif
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Article Title</td>
+                                <td>Article Description</td>
+                                <td colspan="2">Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($articles as $article)
+                            <tr>
+                                <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
+                                <td id={{$article->id}}>{{$article->description}}</td>
+                                <script type="text/javascript">
+                                    var id = @json($article->id);
+                                    document.getElementById(id).innerHTML = @json($article->description); 
+                                </script>
+                                <td><a href="{{ route('admin.edit',$article->id)}}" class="btn btn-primary">Permitir</a></td>
+                                <td>
+                                    <form action="{{ route('articles.destroy', $article->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                <div>
+            </div>
+            
         </div>
-        @endsection
-
-
-
-</body>
+    </body>
 </html>

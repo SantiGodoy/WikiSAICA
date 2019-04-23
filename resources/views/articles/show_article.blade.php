@@ -1,4 +1,3 @@
-@extends('layout')
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,6 +6,7 @@
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
     </head>
@@ -22,27 +22,28 @@
                 }
             </style>
 
-            @section('content')
-            <div style="margin-top: 30px;">
-                <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
-                <div style="text-align: left;">
-                    <a href="{{ route('articles.edit',$article->id)}}">Edit</a>
-                </div>
+            <div class="container">
+                <div style="margin-top: 30px;">
+                    <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
+                    <div style="text-align: left;">
+                        <a href="{{ route('articles.edit',$article->id)}}">Edit</a>
+                    </div>
 
-                <br>
-                
-                <div id={{$article->id}}>{{$article->description}}>
-                    <script type="text/javascript">
-                        var id = @json($article->id);
-                        document.getElementById(id).innerHTML = @json($article->description); 
-                    </script>
-                </div>
-                <br>
-                <div style="text-align: right;">
-                    <i>Last modified: {{$article->updated_at}}</i>
+                    <br>
+                    
+                    <div id={{$article->id}}>{{$article->description}}>
+                        <script type="text/javascript">
+                            var id = @json($article->id);
+                            document.getElementById(id).innerHTML = @json($article->description); 
+                        </script>
+                    </div>
+                    <br>
+                    <div style="text-align: right;">
+                        <i>Last modified: {{$article->updated_at}}</i>
+                    </div>
                 </div>
             </div>
+            
         </div>
-        @endsection
     </body>
 </html>
