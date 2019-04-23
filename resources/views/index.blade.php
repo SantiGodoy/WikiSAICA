@@ -16,20 +16,15 @@
                 @include('partials.nav')
             </div>
             <div class="container">
+                @foreach($departments as $department)
                 <div class="card" style="margin-top:2%;">
                     <div class="card-body">
-                        <h5 class="card-title">Departamento 1</h5>
-                        <p class="card-text">Ultima entrada</p>
+                        <h5 class="card-title">{{$department->name}}</h5>
+                        <p class="card-text">{{$articles[$department->id]->title}}</p> <!-- COMPROBAR BIEN ESTO. TÍTULO DEL ÚLTIMO ARTÍCULO SUBIDO CON RESPECTO AL DEPARTAMENTO-->
                         <a href="#" class="btn btn-primary">Entrar</a>
                     </div>
                 </div>
-                <div class="card" style="margin-top:2%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Departamento 2</h5>
-                        <p class="card-text">Ultima entrada</p>
-                        <a href="#" class="btn btn-primary">Entrar</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </body>

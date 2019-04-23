@@ -18,8 +18,10 @@ Auth::routes();;
 Route::group( ['middleware' => 'auth' ], function()
 {
 	Route::get('/', function () {
-	$user = Auth::user();
-    return view('index', compact('user'));
+    $user = Auth::user();
+    $departments = DB::table('departments')->get();
+    $articles = DB::table('articles')->get();
+    return view('index', compact('departments','articles','user'));
 });
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
     Route::get('/home', 'HomeController@index')->name('home');
