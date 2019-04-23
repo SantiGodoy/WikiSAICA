@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -14,9 +15,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
-
-        return view('articles.index', compact('articles'));
+        $articles = $articles = DB::table('articles')->where('allowed', 'true')->orderBy('created_at', 'desc')->get();
+        $user = null;
+        return view('articles.index', compact('articles', 'user'));
     }
 
     /**
@@ -57,7 +58,9 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        $article = Article::find($id);
+
+        return view('articles.show_article', compact('article'));
     }
 
     /**

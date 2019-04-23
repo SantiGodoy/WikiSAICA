@@ -11,8 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+
+
+Auth::routes();;
+
+Route::group( ['middleware' => 'auth' ], function()
+{
+	Route::get('/', function () {
+	$user = Auth::user();
+    return view('index', compact('user'));
+});
+    Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('admin/ajuda', 'AdminController@ajuda');
+    Route::resource('articles', 'ArticleController');
 });
 
-Route::resource('articles', 'ArticleController');
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
+{
+	Route::resource('admin', 'AdminController');
+});

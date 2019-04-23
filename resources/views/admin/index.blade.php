@@ -47,7 +47,7 @@
                                     var id = @json($article->id);
                                     document.getElementById(id).innerHTML = @json($article->description); 
                                 </script>
-                                <td><a href="{{ route('articles.edit',$article->id)}}" class="btn btn-primary">Edit</a></td>
+                                <td><a href="{{ route('admin.edit',$article->id)}}" class="btn btn-primary">Permitir</a></td>
                                 <td>
                                     <form action="{{ route('articles.destroy', $article->id)}}" method="post">
                                         @csrf
@@ -61,6 +61,7 @@
                     </table>
                 <div>
             </div>
+            
         </div>
     </body>
 </html>
