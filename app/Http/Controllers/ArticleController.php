@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
@@ -46,6 +47,7 @@ class ArticleController extends Controller
       $article = new Article;
       $article->title = $request->get('article_title');
       $article->description = $request->get('article_description');
+      $article->id_user = Auth::user()->id;
       $article->save();
       return redirect('/articles')->with('success', 'Article has been added');
     }

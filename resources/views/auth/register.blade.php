@@ -61,6 +61,23 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="Department" class="col-md-4 col-form-label text-md-right">Department</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="Department" name="Department">
+                                    <option value=0>Laboratorio</option>
+                                    <option value=1>Máquinas</option>
+                                    <option value=2>SGMI</option>
+                                    <option value=3>Informática</option>
+                                    <option value=4>Calidad</option>
+                                    <option value=5>Comercial</option>
+                                    <option value=6>RRHH</option>
+                                    <option value=7>Adminstración</option>
+                                    <option value=8>Operaciones</option>
+                                </select>
+                            </div>
+  </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
