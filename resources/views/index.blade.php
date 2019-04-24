@@ -20,8 +20,11 @@
                 <div class="card" style="margin-top:2%;">
                     <div class="card-body">
                         <h5 class="card-title">{{$department->name}}</h5>
-                        <p class="card-text">{{$articles[$department->id]->title}}</p> <!-- COMPROBAR BIEN ESTO. TÍTULO DEL ÚLTIMO ARTÍCULO SUBIDO CON RESPECTO AL DEPARTAMENTO-->
-                        <a href="#" class="btn btn-primary">Entrar</a>
+                        @if(App\Article::getArticle($department->id))
+                        <p class="card-text">{{App\Article::getArticle($department->id)->title}}</p> <!-- COMPROBAR BIEN ESTO. TÍTULO DEL ÚLTIMO ARTÍCULO SUBIDO CON RESPECTO AL DEPARTAMENTO-->
+                        <a href="{{ route('articles.show',App\Article::getArticle($department->id)->id)}}" class="btn btn-primary">Entrar</a>
+                        @endif
+                        
                     </div>
                 </div>
                 @endforeach
