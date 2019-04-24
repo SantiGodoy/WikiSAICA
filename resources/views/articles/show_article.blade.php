@@ -28,20 +28,45 @@
                     <div style="text-align: left;">
                         <a href="{{ route('articles.edit',$article->id)}}">Edit</a>
                     </div>
-
                     <br>
                     
-                    <div id={{$article->id}}>{{$article->description}}>
+                    <div class = "column" style="float: right; width: 30%">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Col 1</th>
+                              <th>Col 2</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1</td>
+                              <td>Row 1</td>
+                              <td class="text-right">1600.00</td>
+                            </tr>
+                            <tr>
+                              <td>2</td>
+                              <td>Row 2</td>
+                              <td style="text-align: right">400.00</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                     
+                         <div id={{$article->id}}>{{$article->description}}>
                         <script type="text/javascript">
                             var id = @json($article->id);
                             document.getElementById(id).innerHTML = @json($article->description); 
                         </script>
-                    </div>
-                    <br>
-                    <div style="text-align: right;">
-                        <i>Last modified: {{$article->updated_at}}</i>
+
+                        </div>
+                        <br>
+                     <div style="text-align: right; right: 5%; position: absolute; bottom: 5%;">
+                            <i>Last modified: {{$article->updated_at}}</i>
                     </div>
                 </div>
+
             </div>
             
         </div>

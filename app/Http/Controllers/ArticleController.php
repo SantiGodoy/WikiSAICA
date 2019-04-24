@@ -97,6 +97,7 @@ class ArticleController extends Controller
       $article = Article::find($id);
       $article->title = $request->get('article_title');
       $article->description = $request->get('article_description');
+      $article->updated_by = Auth::user()->id;
       $article->save();
 
       return redirect('/articles')->with('success', 'Stock has been updated');
