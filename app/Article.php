@@ -11,7 +11,8 @@ class Article extends Model
 	'article_title',
 	'article_description',
 	'article_allowed',
-	'article_updated_by'
+	'article_updated_by',
+	'article_department_id'
   ];
 
   public static function getArticle($department_id)

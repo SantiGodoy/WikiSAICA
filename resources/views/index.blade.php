@@ -21,8 +21,10 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$department->name}}</h5>
                         @if(App\Article::getArticle($department->id))
-                        <p class="card-text">{{App\Article::getArticle($department->id)->title}}</p> <!-- COMPROBAR BIEN ESTO. TÍTULO DEL ÚLTIMO ARTÍCULO SUBIDO CON RESPECTO AL DEPARTAMENTO-->
-                        <a href="{{ route('articles.show',App\Article::getArticle($department->id)->id)}}" class="btn btn-primary">Entrar</a>
+                        <a href="{{ route('articles.show',App\Article::getArticle($department->id)->id)}}" class="card-text">{{App\Article::getArticle($department->id)->title}}</a> <!-- COMPROBAR BIEN ESTO. TÍTULO DEL ÚLTIMO ARTÍCULO SUBIDO CON RESPECTO AL DEPARTAMENTO-->
+                        <br>
+                        <br>
+                        <a href="{{ route('departments.show',$department->id) }}" class="btn btn-primary">Entrar</a>
                         @endif
                         
                     </div>

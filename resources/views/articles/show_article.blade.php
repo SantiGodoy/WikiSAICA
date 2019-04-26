@@ -32,23 +32,22 @@
                     
                     <div class = "column" style="float: right; width: 30%">
                         <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Col 1</th>
-                              <th>Col 2</th>
-                            </tr>
-                          </thead>
                           <tbody>
                             <tr>
-                              <td>1</td>
-                              <td>Row 1</td>
-                              <td class="text-right">1600.00</td>
+                              <td>Creado por</td>
+                              <td class="text-left">{{$user->name}}</td>
                             </tr>
                             <tr>
-                              <td>2</td>
-                              <td>Row 2</td>
-                              <td style="text-align: right">400.00</td>
+                              <td>Último usuario modificado</td>
+                              <td style="text-align: left">{{$userUpdate->name}}</td>
+                            </tr>
+                              <tr>
+                              <td>Fecha de creación</td>
+                              <td style="text-align: left">{{$article->created_at}}</td>
+                            </tr>
+                             <tr>
+                              <td>Departamento</td>
+                              <td style="text-align: left">{{$department->name}}</td>
                             </tr>
                           </tbody>
                         </table>

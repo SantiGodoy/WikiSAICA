@@ -48,6 +48,7 @@ class ArticleController extends Controller
       $article->title = $request->get('article_title');
       $article->description = $request->get('article_description');
       $article->id_user = Auth::user()->id;
+      $article->department_id = $request->get('Department');
       $article->save();
       return redirect('/articles')->with('success', 'Article has been added');
     }
@@ -62,7 +63,12 @@ class ArticleController extends Controller
     {
         $article = DB::table('articles')->where('id', $id)->where('allowed', 'true')->first();
         if($article != null)
-            return view('articles.show_article', compact('article'));
+        {
+            $user = DB::table('users')->where('id', $article->id_user)->first();
+            $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
+            $department = DB::table('departments')->where('id', $article->department_id)->first();
+            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department'));
+        }
         else
             return redirect('');
     }

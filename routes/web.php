@@ -27,6 +27,7 @@ Route::group( ['middleware' => 'auth' ], function()
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('admin/ajuda', 'AdminController@ajuda');
     Route::resource('articles', 'ArticleController');
+    Route::resource('departments', 'DepartmentController');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()

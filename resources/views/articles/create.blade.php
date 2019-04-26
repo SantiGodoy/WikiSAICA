@@ -68,6 +68,21 @@
                                     </script>
                                 </div>
                                 <br>
+                                <div class="form-group mb-2">
+                                <label for="Department">Department</label>
+                                <select class="form-control" style="width: 250px" id="Department" name="Department">
+                                    <option value=0>Laboratorio</option>
+                                    <option value=1>Máquinas</option>
+                                    <option value=2>SGMI</option>
+                                    <option value=3>Informática</option>
+                                    <option value=4>Calidad</option>
+                                    <option value=5>Comercial</option>
+                                    <option value=6>RRHH</option>
+                                    <option value=7>Adminstración</option>
+                                    <option value=8>Operaciones</option>
+                                </select>
+  </div>
+                                <br>
                                 <button type="submit" class="btn btn-primary">Add</button>
                             </form>
                         </div>
