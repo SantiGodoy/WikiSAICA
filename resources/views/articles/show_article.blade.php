@@ -22,15 +22,15 @@
                 }
             </style>
 
-            <div class="container">
-                <div style="margin-top: 30px;">
+            <div class="container" style= " margin-right: 2%;">
+                <div style="margin-top: 30px; position:static; min-height:85% ;">
                     <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
                     <div style="text-align: left;">
                         <a href="{{ route('articles.edit',$article->id)}}">Edit</a>
                     </div>
                     <br>
 
-                    <div class = "column" style="float: right; width: 30%">
+                    <div class = "column" style="float: right; width: 40%; padding-left:5%;">
                         <table class="table table-bordered">
                           <tbody>
                             <tr>
@@ -53,21 +53,22 @@
                         </table>
                     </div>
 
-                         <div id={{$article->id}}>{{$article->description}}>
+                      <div id={{$article->id}}>{{$article->description}}>
                         <script type="text/javascript">
                             var id = @json($article->id);
                             document.getElementById(id).innerHTML = @json($article->description);
                         </script>
 
-                        </div>
-                        <br>
-                     <div style="text-align: right; right: 5%; position: absolute; width: 100% bottom: 5%; margin-bottom: 3%">
-                            <i>Last modified: {{$article->updated_at}}</i>
-                    </div>
+                      </div>
+                      <br>
+
                 </div>
 
-            </div>
+                <div style="text-align: right; right: 10%; position: static; width: 100% bottom: 5%; margin-bottom: 3%;">
+                       <i style="margin-right:3%;">Last modified: {{$article->updated_at}}</i>
+               </div>
 
+            </div>
         </div>
     </body>
 </html>
