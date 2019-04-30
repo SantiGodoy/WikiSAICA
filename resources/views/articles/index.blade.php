@@ -43,8 +43,8 @@
                             @foreach($articles as $article)
                             <tr>
                                 <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
-                                <td>{{$user->name}}</td>
-                                <td>{{article->updated_at}}
+                                <td>{{App\Article::getOwner($article)->name}}</td>
+                                <td>{{$article->updated_at}}
                                 <!--
                                 <td id={{$article->id}}>{{$article->description}}</td>
                                 <script type="text/javascript">

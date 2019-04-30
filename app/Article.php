@@ -20,4 +20,10 @@ class Article extends Model
 		$article = DB::table('articles')->where('department_id', $department_id)->where('allowed', 'true')->orderBy('created_at', 'desc')->first();
 		return $article;
     }
+
+    public static function getOwner($article)
+    {
+    	$user = DB::table('users')->where('id', $article->id_user)->first();
+    	return $user;
+    }
 }
