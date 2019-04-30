@@ -31,12 +31,12 @@
                     <br>
                     @endif
                     <table class="table table-striped">
-                        <thead>
+                        <thead class="thead-dark">
                             <tr>
-                                <td>Article Title</td>
-                                <td>Creado por</td>
-                                <td>Última modificación</td>
-                                <td colspan="2">Action</td>
+                                <th scope="col">Título</th>
+                                <th scope="col">Autor</th>
+                                <th scope="col">Última modificación</th>
+                                <th scope="col" colspan="2">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,7 +44,13 @@
                             <tr>
                                 <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
                                 <td>{{App\Article::getOwner($article)->name}}</td>
-                                <td>{{$article->updated_at}}
+                                <td id={{$article->id}}>{{$article->updated_at}}</td>
+                                <script>
+                                    var id = @json($article->id);
+                                    var date = document.getElementById(id).innerHTML.split(" ");
+                                    var dmy = date[0].split("-");
+                                    document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
+                                </script>
                                 <!--
                                 <td id={{$article->id}}>{{$article->description}}</td>
                                 <script type="text/javascript">

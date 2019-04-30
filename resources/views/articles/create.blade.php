@@ -43,7 +43,7 @@
                                 <div class="form-group">
                                     @csrf
                                     <label for="name">Article Title:</label>
-                                    <input type="text" class="form-control" name="article_title"/>
+                                    <input type="text" class="form-control" name="article_title" autocomplete="off"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Article Description :</label>
