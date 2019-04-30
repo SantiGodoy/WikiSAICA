@@ -17,7 +17,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = $articles = DB::table('articles')->where('allowed', 'true')->orderBy('created_at', 'desc')->get();
-        $user = null;
+        $user =  Auth::user();
         return view('articles.index', compact('articles', 'user'));
     }
 

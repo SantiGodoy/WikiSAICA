@@ -23,8 +23,8 @@ class DepartmentController extends Controller
 
     public function show($id)
     {
-        $articles = $articles = DB::table('articles')->where('allowed', 'true')->where('department_id', $id)->orderBy('created_at', 'desc')->get();
-        $user = null;
+        $articles = DB::table('articles')->where('allowed', 'true')->where('department_id', $id)->orderBy('created_at', 'desc')->get();
+        $user = DB::table('users')->where('id', $article->id_user)->first();
         return view('articles.index', compact('articles', 'user'));
     }
 }

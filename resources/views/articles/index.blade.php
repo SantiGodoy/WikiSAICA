@@ -34,7 +34,8 @@
                         <thead>
                             <tr>
                                 <td>Article Title</td>
-                                <td>Article Description</td>
+                                <td>Creado por</td>
+                                <td>Última modificación</td>
                                 <td colspan="2">Action</td>
                             </tr>
                         </thead>
@@ -42,19 +43,21 @@
                             @foreach($articles as $article)
                             <tr>
                                 <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
+                                <td>{{$user->name}}</td>
+                                <td>{{article->updated_at}}
+                                <!--
                                 <td id={{$article->id}}>{{$article->description}}</td>
                                 <script type="text/javascript">
                                     var id = @json($article->id);
                                     document.getElementById(id).innerHTML = @json($article->description);
                                 </script>
+                                -->
                                 <td><a href="{{ route('articles.edit',$article->id)}}" class="btn btn-primary">Edit</a></td>
                                 <td>
                                     <form action="{{ route('articles.destroy', $article->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        @if ((Auth::user()->role) == "admin")
                                         <button class="btn btn-danger" type="submit">Delete</button>
-                                        @endif
                                     </form>
                                 </td>
                             </tr>
