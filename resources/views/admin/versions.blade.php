@@ -35,8 +35,9 @@
                             <tr>
                                 <th scope="col">Título</th>
                                 <th scope="col">Autor</th>
-                                <th scope="col">Última modificación</th>
-                                <th scope="col" colspan="2">Acción</th>
+                                <th scope="col">Modificador</th>
+                                <th scope="col" colspan="1">Acción</th>
+                                <th scope="col">Fecha</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,7 +45,7 @@
                             <tr>
                                 <td>{{$article->title}}</td>
                                 <td>{{App\Article::getOwner($article)->name}}</td>
-                                <td id={{$article->id}}>{{$article->updated_at}}</td>
+                                <td>{{App\Article::getModifier($article)->name}}</td>
                                 <script>
                                     var id = @json($article->id);
                                     var date = document.getElementById(id).innerHTML.split(" ");
@@ -58,6 +59,8 @@
                                     document.getElementById(id).innerHTML = @json($article->description);
                                 </script>
                                 -->
+
+                                <!--
                                 <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
                                 <td>
                                     @if ((Auth::user()->role) == "admin")
@@ -68,6 +71,10 @@
                                     </form>
                                     @endif
                                 </td>
+                                -->
+                          
+                                <td>{{$article->last_action}}</td>
+                                <td id={{$article->id}}>{{$article->updated_at}}</td>
                             </tr>
                             @endforeach
                         </tbody>

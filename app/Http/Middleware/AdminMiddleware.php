@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class AdminMiddleware
 {
@@ -18,7 +19,8 @@ class AdminMiddleware
     {
     	if ($request->user() && $request->user()->role != 'admin')
 			{
-				return new Response(view('index'));
+        $departments = DB::table('departments')->get();
+				return new Response(view('index', compact('departments')));
 			}
 
 		return $next($request);

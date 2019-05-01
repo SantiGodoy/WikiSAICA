@@ -15,7 +15,7 @@
             <div class="bg-light border-right" id="sidebar-wrapper">
                 @include('partials.nav')
             </div>
-            <div class="container">
+            <div class="container-fluid" style = "margin-left: 0;">
                 @foreach($departments as $department)
                 <div class="card" style="margin-top:2%;">
                     <div class="card-body">
@@ -30,6 +30,7 @@
                     </div>
                 </div>
                 @endforeach
+                <br>
             </div>
         </div>
     </body>

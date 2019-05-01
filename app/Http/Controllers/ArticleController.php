@@ -48,6 +48,7 @@ class ArticleController extends Controller
       $article->title = $request->get('article_title');
       $article->description = $request->get('article_description');
       $article->id_user = Auth::user()->id;
+      $article->updated_by = $article->id_user;
       $article->department_id = $request->get('Department');
       $article->save();
       return redirect('/articles')->with('success', 'Article has been added');
@@ -108,6 +109,7 @@ class ArticleController extends Controller
       $article->title = $request->get('article_title');
       $article->description = $request->get('article_description');
       $article->updated_by = Auth::user()->id;
+      $article->allowed = false;
       $article->save();
 
       return redirect('/articles')->with('success', 'Stock has been updated');
@@ -126,4 +128,6 @@ class ArticleController extends Controller
 
         return redirect('/articles')->with('success', 'Stock has been deleted Successfully');
     }
+
+
 }

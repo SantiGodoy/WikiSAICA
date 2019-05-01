@@ -32,5 +32,6 @@ Route::group( ['middleware' => 'auth' ], function()
 
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 {
-	Route::resource('admin', 'AdminController');
+    Route::resource('admin', 'AdminController');
+    Route::resource('version', 'VersionController');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use App\Version;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -29,8 +30,19 @@ class AdminController extends Controller
     public function edit($id)
     {
     	$article = Article::find($id);
-    	$article->allowed = true;
-    	$article->save();
+        $article->allowed = true;
+        $article->timestamps = false;
+        $article->save();
+        $article->timestamps = true;
+        if($article->created_at == $article->updated_at)
+        {
+            Version::addVersion($article, 1);
+        }
+        else
+        {
+            Version::addVersion($article, 0);
+        }
+        
     	error_log('Articulo');
        	return $this->index();
     }

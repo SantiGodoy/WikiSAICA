@@ -22,8 +22,8 @@
                 }
             </style>
 
-            <div class="container" style= " margin-right: 2%;">
-                <div style="margin-top: 30px; position:static; min-height:85% ;">
+            <div class="container" style= " margin-left: 0">
+                <div style="margin-top: 30px; position:static; min-height:85%;">
                     <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
                     <div style="text-align: left;">
                         <a href="{{ route('articles.edit',$article->id)}}">Edit</a>

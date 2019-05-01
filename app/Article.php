@@ -25,5 +25,11 @@ class Article extends Model
     {
     	$user = DB::table('users')->where('id', $article->id_user)->first();
     	return $user;
+		}
+		
+		public static function getModifier($article)
+    {
+    	$user = DB::table('users')->where('id', $article->updated_by)->first();
+    	return $user;
     }
 }
