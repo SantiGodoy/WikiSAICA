@@ -31,6 +31,50 @@
                     <br>
                     @endif
                     <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Departamento</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Autor</th>
+                                <th scope="col">Fecha de subida</th>
+                                <th scope="col" colspan="3">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($articles as $article)
+                            <tr>
+                                <td>{{App\Department::getDepartment($article->department_id)->name}}</td>
+                                <td>{{$article->title}}</td>
+                                <td>{{App\Article::getOwner($article)->name}}</td>
+                                <td id={{$article->id}}>{{$article->updated_at}}</td>
+                                <script>
+                                    var id = @json($article->id);
+                                    var date = document.getElementById(id).innerHTML.split(" ");
+                                    var dmy = date[0].split("-");
+                                    document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
+                                </script>
+                                <!--
+                                <td id={{$article->id}}>{{$article->description}}</td>
+                                <script type="text/javascript">
+                                    var id = @json($article->id);
+                                    document.getElementById(id).innerHTML = @json($article->description);
+                                </script>
+                                -->
+                                <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
+                                <td><a href="{{ route('admin.edit',$article->id)}}" class="btn btn-primary">Permitir</a></td>
+                                <td>
+                                    <form action="{{ route('articles.destroy', $article->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <!--
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <td>Article Title</td>
@@ -59,6 +103,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    -->
                 <div>
             </div>
             

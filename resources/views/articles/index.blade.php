@@ -42,7 +42,7 @@
                         <tbody>
                             @foreach($articles as $article)
                             <tr>
-                                <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
+                                <td>{{$article->title}}</td>
                                 <td>{{App\Article::getOwner($article)->name}}</td>
                                 <td id={{$article->id}}>{{$article->updated_at}}</td>
                                 <script>
@@ -58,13 +58,15 @@
                                     document.getElementById(id).innerHTML = @json($article->description);
                                 </script>
                                 -->
-                                <td><a href="{{ route('articles.edit',$article->id)}}" class="btn btn-primary">Edit</a></td>
+                                <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
                                 <td>
+                                    @if ((Auth::user()->role) == "admin")
                                     <form action="{{ route('articles.destroy', $article->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                        <button class="btn btn-danger" type="submit">Eliminar</button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

@@ -61,7 +61,11 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = DB::table('articles')->where('id', $id)->where('allowed', 'true')->first();
+        $article = null;
+        if((Auth::user()->role) == "admin")
+            $article = DB::table('articles')->where('id', $id)->first();
+        else
+            $article = DB::table('articles')->where('id', $id)->where('allowed', 'true')->first();
         if($article != null)
         {
             $user = DB::table('users')->where('id', $article->id_user)->first();
