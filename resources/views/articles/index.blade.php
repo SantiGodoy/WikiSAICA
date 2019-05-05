@@ -9,6 +9,26 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
+        
+        <script type="text/javascript">
+            function searchData() {
+                var input = document.getElementById("searchInput");
+                var filter = input.value.toUpperCase();
+                var table = document.getElementById("tableData");
+                var tr = table.getElementsByTagName("tr");
+                var select = document.getElementById("searchSelect");
+                for(var i=0; i<tr.length; i++){
+                    var td = tr[i].getElementsByTagName("td")[select.options[select.selectedIndex].value];
+                    if (td){
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1){
+                            tr[i].style.display = "";
+                        }
+                        else 
+                            tr[i].style.display = "none";
+                    }
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -30,6 +50,15 @@
                     </div>
                     <br>
                     @endif
+                    
+                    <!-- Search -->
+                    <input id="searchInput"class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" onkeyup="searchData()" autocomplete="off">
+                    <select id="searchSelect" class="custom-select">
+                        <option selected value="0">Título</option>
+                        <option value="1">Autor</option>
+                    </select>
+
+                    <!-- Table -->
                     <table class="table table-striped">
                         <thead class="thead-dark">
                             <tr>
@@ -39,7 +68,7 @@
                                 <th scope="col" colspan="2">Acción</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tableData">
                             @foreach($articles as $article)
                             <tr>
                                 <td>{{$article->title}}</td>
