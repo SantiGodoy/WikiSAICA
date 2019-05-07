@@ -126,7 +126,7 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $article->delete();
 
-        return redirect('/articles')->with('success', 'Stock has been deleted Successfully');
+        return redirect('/articles')->with('success', 'Articulo borrado');
     }
 
 
