@@ -51,7 +51,14 @@ class ArticleController extends Controller
       $article->updated_by = $article->id_user;
       $article->department_id = $request->get('Department');
       $article->save();
-      return redirect('/articles')->with('success', 'Article has been added');
+
+      foreach($request->documents as $document){
+        $filename = $document->getClientOriginalName();
+        $document->storeAs('document', $filename);
+        DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+      }
+
+      return redirect('/articles')->with('success', 'Artículo añadido con éxito');
     }
 
     /**
@@ -72,7 +79,8 @@ class ArticleController extends Controller
             $user = DB::table('users')->where('id', $article->id_user)->first();
             $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
             $department = DB::table('departments')->where('id', $article->department_id)->first();
-            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department'));
+            $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents'));
         }
         else
             return redirect('');

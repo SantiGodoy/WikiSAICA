@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Home</title>
+        <title>Nuevo artículo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
@@ -15,7 +15,7 @@
             <div class="bg-light border-right" id="sidebar-wrapper">
                 @include('partials.nav')
             </div>
-            
+
             <style>
                 .uper {
                     margin-top: 40px;
@@ -25,7 +25,7 @@
             <div class="container">
                 <div class="card uper">
                     <div class="card-header">
-                        Add Article
+                        Añadir artículo
                     </div>
                     <div class="card-body">
                         @if ($errors->any())
@@ -39,14 +39,14 @@
                         <br>
                         @endif
                         <div class="container-fluid">
-                            <form method="post" action="{{ route('articles.store') }}">
+                            <form method="post" action="{{ route('articles.store') }}" enctype="multipart/form-data">
                                 <div class="form-group">
                                     @csrf
-                                    <label for="name">Article Title:</label>
+                                    <label for="name">Título:</label>
                                     <input type="text" class="form-control" name="article_title" autocomplete="off"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Article Description :</label>
+                                    <label for="price">Descripción:</label>
                                     <textarea style="width: 100%;" id ="article_description" name="article_description"></textarea><br/>
                                     <script>
                                         CKEDITOR.replace('article_description', {
@@ -58,18 +58,22 @@
                                         height: 350
                                         });
                                     </script>
-                                    <script>  
-                                        function getData() {  
-                                        //Get data written in first Editor   
-                                        var editor_data = CKEDITOR.instances['article_description'].getData();  
-                                        //Set data in Second Editor which is written in first Editor  
-                                        document.getElementById("description").innerHTML = editor_data; 
-                                    }  
+                                    <script>
+                                        function getData() {
+                                        //Get data written in first Editor
+                                        var editor_data = CKEDITOR.instances['article_description'].getData();
+                                        //Set data in Second Editor which is written in first Editor
+                                        document.getElementById("description").innerHTML = editor_data;
+                                    }
                                     </script>
                                 </div>
                                 <br>
+                                <div>
+                                  <input multiple="multiple" name="documents[]" type="file">
+                                </div>
+                                <br>
                                 <div class="form-group mb-2">
-                                <label for="Department">Department</label>
+                                <label for="Department">Departmento</label>
                                 <select class="form-control" style="width: 250px" id="Department" name="Department">
                                     <option value=0>Laboratorio</option>
                                     <option value=1>Máquinas</option>
@@ -83,13 +87,13 @@
                                 </select>
   </div>
                                 <br>
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="submit" class="btn btn-primary">Añadir</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </body>
 </html>

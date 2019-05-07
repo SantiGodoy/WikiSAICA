@@ -23,7 +23,7 @@
             </style>
 
             <div class="container" style= " margin-left: 0">
-                <div style="margin-top: 30px; position:static; min-height:85%;">
+                <div style="margin-top: 30px; position:static; min-height:85%; background-color:red;">
                     <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
                     <div style="text-align: left;">
                         <a href="{{ route('articles.edit',$article->id)}}">Edit</a>
@@ -58,10 +58,17 @@
                             var id = @json($article->id);
                             document.getElementById(id).innerHTML = @json($article->description);
                         </script>
-
                       </div>
                       <br>
 
+                </div>
+                <div>
+                  <h5>Documentos: </h5>
+                  @foreach($documents as $document)
+              <!--   <a href="{{ asset('storage/app/' . $document) }}">{{$document}}</a> -->
+                  {{$document}}
+
+                  @endforeach
                 </div>
 
                 <div style="text-align: right; right: 10%; position: static; width: 100% bottom: 5%; margin-bottom: 3%;">
