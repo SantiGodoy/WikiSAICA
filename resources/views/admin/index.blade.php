@@ -52,12 +52,21 @@
                     @endif
 
                     <!-- Search -->
-                    <input id="searchInput"class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" onkeyup="searchData()" autocomplete="off">
-                    <select id="searchSelect" class="custom-select">
-                        <option selected value="0">Departamento</option>
-                        <option value="1">Título</option>
-                        <option value="2">Autor</option>
-                    </select>
+                    <table width=100%>
+                        <tr>
+                        <td width="80%">
+                            <input id="searchInput"class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" onkeyup="searchData()" autocomplete="off">
+                        </td>
+                        <td width="20%">
+                        <select id="searchSelect" class="custom-select">
+                            <option selected value="0">Departamento</option>
+                            <option value="1">Título</option>
+                            <option value="2">Autor</option>
+                        </select>
+                        </td>
+                    </tr>
+                    </table>
+                    <br>
 
                     <!-- Table -->
                     <table class="table table-striped">
