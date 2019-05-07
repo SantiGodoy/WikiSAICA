@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use App\Version;
+use App\Articles_deleted;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -46,4 +47,22 @@ class AdminController extends Controller
     	error_log('Articulo');
        	return $this->index();
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $article = Article::find($id);
+        
+        Articles_deleted::addDeleteArticle($article);
+
+        $article->delete();
+
+        return redirect('/articles')->with('success', 'Articulo borrado');
+    }
+
 }
