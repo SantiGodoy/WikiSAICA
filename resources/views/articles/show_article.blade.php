@@ -23,7 +23,7 @@
             </style>
 
             <div class="container" style= " margin-left: 0">
-                <div style="margin-top: 30px; position:static; min-height:85%; background-color:red;">
+                <div style="margin-top: 30px; position:static; min-height:85%;">
                     <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
                     <div style="text-align: left;">
                         <a href="{{ route('articles.edit',$article->id)}}">Edit</a>
@@ -63,11 +63,15 @@
 
                 </div>
                 <div>
+
+                  <!--SE PUEDE ACCEDER DESDE URL. HAY Q MIRARLO -->
                   <h5>Documentos: </h5>
                   @foreach($documents as $document)
-              <!--   <a href="{{ asset('storage/app/' . $document) }}">{{$document}}</a> -->
-                  {{$document}}
+                  <!--<a href="{{asset('storage/'.$document)}}">{{$document}}</a> -->
+                  <a href="{{route('download',$document)}}">{{$document}}</a>
 
+                 <br>
+                <!--  {{$document}}-->
                   @endforeach
                 </div>
 

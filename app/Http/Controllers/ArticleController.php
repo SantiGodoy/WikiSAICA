@@ -54,7 +54,9 @@ class ArticleController extends Controller
 
       foreach($request->documents as $document){
         $filename = $document->getClientOriginalName();
-        $document->storeAs('document', $filename);
+      //  $document->move(public_path("/files"), $filename);
+        $document->storeAs('documents', $filename);
+
         DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
       }
 
@@ -84,6 +86,13 @@ class ArticleController extends Controller
         }
         else
             return redirect('');
+    }
+
+    public function getFile($filename)
+    {
+
+        $pathToFile = storage_path('app/documents/'.$filename);
+        return response()->download($pathToFile, null, [], null);
     }
 
     /**

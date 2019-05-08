@@ -35,3 +35,6 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::resource('admin', 'AdminController');
     Route::resource('version', 'VersionController');
 });
+
+//REVISAR
+Route::get('/storage/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');

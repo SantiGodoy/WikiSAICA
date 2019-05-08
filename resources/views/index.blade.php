@@ -15,6 +15,7 @@
                 @include('partials.nav')
             </div>
             <div class="container-fluid" style = "margin-left: 0;">
+                <br>
                 <h1 id="firstHeading" class="firstHeading">Bienvenidos/as a WikiSaica</h1>
                 <h5 id="firstHeading" class="firstHeading">Aquí podrás ver los últimos artículos que se han añadido por cada departamento o  <a href="{{ route('articles.index')}}">buscar</a> entre todos los artículos disponibles.</h4>
                 <table width="100%">
@@ -23,7 +24,7 @@
                         <?php if($i % 2 == 0) print "<tr>"?>
                                 <td width="50%">
                                     <div class="card" style="margin-top:2%;">
-                                        <div class="card-body">        
+                                        <div class="card-body">
                                             <h5 class="card-title"><a class= "card-title" href="{{ route('departments.show',$department->id) }}">{{$department->name}}</a></h5>
                                             @if(App\Article::getArticle($department->id))
                                             <a href="{{ route('articles.show',App\Article::getArticle($department->id)->id)}}" class="card-text">{{App\Article::getArticle($department->id)->title}}</a> <!-- COMPROBAR BIEN ESTO. TÍTULO DEL ÚLTIMO ARTÍCULO SUBIDO CON RESPECTO AL DEPARTAMENTO-->
