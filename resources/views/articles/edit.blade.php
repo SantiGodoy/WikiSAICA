@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Home</title>
+        <title>Editar</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
@@ -15,7 +15,7 @@
             <div class="bg-light border-right" id="sidebar-wrapper">
                 @include('partials.nav')
             </div>
-            
+
             <style>
                 .uper {
                     margin-top: 40px;
@@ -25,7 +25,7 @@
             <div class="container">
                 <div class="card uper">
                     <div class="card-header">
-                        Edit Articles
+                        Editar artículo
                     </div>
                     <div class="card-body">
                         @if ($errors->any())
@@ -42,11 +42,11 @@
                             @method('PATCH')
                             @csrf
                             <div class="form-group">
-                                <label for="name">Article Name:</label>
+                                <label for="name">Título:</label>
                                 <input type="text" class="form-control" name="article_title" value="{{ $article->title }}"/>
                             </div>
                             <div class="form-group">
-                                <label for="price">Article Description :</label>
+                                <label for="price">Descripción:</label>
                                 <textarea style="width: 100%;" id ="article_description" name="article_description"></textarea><br/>
                                     <script>
                                         CKEDITOR.replace('article_description', {
@@ -58,16 +58,21 @@
                                         height: 350
                                         });
                                     </script>
-                                    <script>  
-                                        CKEDITOR.instances['article_description'].setData(@json($article->description));  
+                                    <script>
+                                        CKEDITOR.instances['article_description'].setData(@json($article->description));
                                     </script>
                             </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <br>
+                            <div>
+                              <input multiple="multiple" name="documents[]" type="file">
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
                         </form>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </body>
 </html>
