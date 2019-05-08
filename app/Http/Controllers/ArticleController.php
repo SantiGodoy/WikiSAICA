@@ -54,7 +54,6 @@ class ArticleController extends Controller
 
       foreach($request->documents as $document){
         $filename = $document->getClientOriginalName();
-      //  $document->move(public_path("/files"), $filename);
         $document->storeAs('documents', $filename);
 
         DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
@@ -90,7 +89,6 @@ class ArticleController extends Controller
 
     public function getFile($filename)
     {
-
         $pathToFile = storage_path('app/documents/'.$filename);
         return response()->download($pathToFile, null, [], null);
     }
@@ -141,6 +139,19 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
+
+        // Revisar
+        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+
+        if($documents != NULL)
+        {
+            foreach($documents as $document)
+            {
+             unlink(storage_path('app/documents/'.$document));
+             DB::table('documents')->where('article_id', '=', $id)->delete();
+            }
+        }
+        
         $article->delete();
 
         return redirect('/articles')->with('success', 'Articulo borrado');

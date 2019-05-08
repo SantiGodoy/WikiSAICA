@@ -64,14 +64,10 @@
                 </div>
                 <div>
 
-                  <!--SE PUEDE ACCEDER DESDE URL. HAY Q MIRARLO -->
                   <h5>Documentos: </h5>
                   @foreach($documents as $document)
-                  <!--<a href="{{asset('storage/'.$document)}}">{{$document}}</a> -->
                   <a href="{{route('download',$document)}}">{{$document}}</a>
-
                  <br>
-                <!--  {{$document}}-->
                   @endforeach
                 </div>
 

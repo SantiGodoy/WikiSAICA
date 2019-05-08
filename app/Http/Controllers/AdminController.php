@@ -7,7 +7,7 @@ use App\Article;
 use App\Version;
 use App\Articles_deleted;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
 {
      /**
@@ -43,7 +43,7 @@ class AdminController extends Controller
         {
             Version::addVersion($article, 0);
         }
-        
+
     	error_log('Articulo');
        	return $this->index();
     }
@@ -57,8 +57,20 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
-        
+
         Articles_deleted::addDeleteArticle($article);
+
+        // Revisar
+        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+
+        if($documents != NULL)
+        {
+            foreach($documents as $document)
+            {
+             unlink(storage_path('app/documents/'.$document));
+             DB::table('documents')->where('article_id', '=', $id)->delete();
+            }
+        }
 
         $article->delete();
 

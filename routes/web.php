@@ -28,6 +28,7 @@ Route::group( ['middleware' => 'auth' ], function()
     Route::get('admin/ajuda', 'AdminController@ajuda');
     Route::resource('articles', 'ArticleController');
     Route::resource('departments', 'DepartmentController');
+		Route::get('files/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
@@ -36,5 +37,5 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
     Route::resource('version', 'VersionController');
 });
 
-//REVISAR
-Route::get('/storage/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');
+
+//Route::get('/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');
