@@ -40,26 +40,28 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        'article_title'=>'required',
-        'article_description'=> 'required'
-      ]);
+            'article_title'=>'required',
+            'article_description'=> 'required'
+        ]);
 
-      $article = new Article;
-      $article->title = $request->get('article_title');
-      $article->description = $request->get('article_description');
-      $article->id_user = Auth::user()->id;
-      $article->updated_by = $article->id_user;
-      $article->department_id = $request->get('Department');
-      $article->save();
+        $article = new Article;
+        $article->title = $request->get('article_title');
+        $article->description = $request->get('article_description');
+        $article->id_user = Auth::user()->id;
+        $article->updated_by = $article->id_user;
+        $article->department_id = $request->get('Department');
+        $article->save();
+    
+        $documents = $request->documents;
+        if($documents != NULL) {
+            foreach($documents as $document){
+                $filename = $document->getClientOriginalName();
+                $document->storeAs('documents', $filename);
 
-      foreach($request->documents as $document){
-        $filename = $document->getClientOriginalName();
-        $document->storeAs('documents', $filename);
-
-        DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
-      }
-
-      return redirect('/articles')->with('success', 'Artículo añadido con éxito');
+                DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+            }
+        }
+        return redirect('/articles')->with('success', 'Artículo añadido con éxito');
     }
 
     /**
@@ -127,7 +129,7 @@ class ArticleController extends Controller
       $article->allowed = false;
       $article->save();
 
-      return redirect('/articles')->with('success', 'Stock has been updated');
+      return redirect('/articles')->with('success', 'Artículo actualizado');
     }
 
     /**
@@ -154,7 +156,7 @@ class ArticleController extends Controller
         
         $article->delete();
 
-        return redirect('/articles')->with('success', 'Articulo borrado');
+        return redirect('/articles')->with('success', 'Artículo borrado');
     }
 
 

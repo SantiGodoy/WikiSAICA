@@ -72,7 +72,7 @@
                 </div>
 
                 <div style="text-align: right; right: 10%; position: static; width: 100% bottom: 5%; margin-bottom: 3%;">
-                       <i style="margin-right:3%;">Last modified: {{$article->updated_at}}</i>
+                       <i style="margin-right:3%;">Última modificación: {{$article->updated_at}}</i>
                </div>
 
             </div>

@@ -44,7 +44,7 @@ class AdminController extends Controller
             Version::addVersion($article, 0);
         }
 
-    	error_log('Articulo');
+    	error_log('Artículo');
        	return $this->index();
     }
 
@@ -74,7 +74,7 @@ class AdminController extends Controller
 
         $article->delete();
 
-        return redirect('/articles')->with('success', 'Articulo borrado');
+        return redirect('/articles')->with('success', 'Artículo borrado');
     }
 
 }
