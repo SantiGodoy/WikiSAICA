@@ -38,7 +38,7 @@
                         </div>
                         <br>
                         @endif
-                        <form method="post" action="{{ route('articles.update', $article->id) }}">
+                        <form method="post" action="{{ route('articles.update', $article->id) }}" enctype="multipart/form-data">
                             @method('PATCH')
                             @csrf
                             <div class="form-group">
@@ -64,11 +64,69 @@
                             </div>
                             <br>
                             <div>
+                          <!--    <script type="text/javascript">
+                                 function deleteFile () {
+                              //    var filename = document.getElementById('filename').innerHTML;
+                                  var filename = $(this).val();
+                                  console.log(filename);
+                                /*  $.ajax({
+                                    type: "DELETE",
+                                    url: "/deleteFile/"+filename,
+                                    data: {_method:'delete', _token: token},
+                                    success:alert("File deleted."),
+                                    error:  alert("File not deleted.")
+                                  }) */
+                                }
+                              </script>
+                              @foreach($documents as $document)
+                              <a id = "filename" href="{{route('download',$document)}}">{{$document}}</a> -->
+
+                            <!--  <form action="{{ route('deleteFile', $document)}}" method="post">
+                                  <button style="margin-left:20px;" value="{{$document}}">Eliminar</button>
+                              </form>
+                              @endforeach -->
+                              <br>
+                              <br>
                               <input multiple="multiple" name="documents[]" type="file">
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </form>
+
+
+                  <!--      <script type="text/javascript">
+                               function deleteFile () {
+                            //    var filename = document.getElementById('filename').innerHTML;
+                                var filename = $(this).val();
+                               console.log(filename);
+                                $.ajax({
+                                  type: "DELETE",
+                                  url: "deleteFile/"+filename,
+                                  data: {_method:'delete', _token: token},
+                                  success:alert("File deleted."),
+                                  error:  alert("File not deleted.")
+                                })
+                              }
+                            </script>
+                            @foreach($documents as $document)
+                            <a id = "filename" href="{{route('download',$document)}}">{{$document}}</a>
+                            <button style="margin-left:20px;" value="{{$document}}" onclick="deleteFile()">Eliminar</button>
+                            @endforeach
+
+                            <script>
+
+                            function Funcion()
+                            {
+                              console.log("entra");
+                            }
+
+                            </script>
+
+                            <button onclick="Funcion()">Pincha</button> -->
+
+
+
+
                     </div>
                 </div>
             </div>

@@ -29,13 +29,15 @@ Route::group( ['middleware' => 'auth' ], function()
     Route::resource('articles', 'ArticleController');
     Route::resource('departments', 'DepartmentController');
 		Route::get('files/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');
+
 });
 
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 {
     Route::resource('admin', 'AdminController');
     Route::resource('version', 'VersionController');
+
 });
 
-
+//	Route::delete('deleteFile/{filename}', 'ArticleController@deleteFile')->name('deleteFile');
 //Route::get('/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');

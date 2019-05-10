@@ -51,7 +51,7 @@ class ArticleController extends Controller
         $article->updated_by = $article->id_user;
         $article->department_id = $request->get('Department');
         $article->save();
-    
+
         $documents = $request->documents;
         if($documents != NULL) {
             foreach($documents as $document){
@@ -95,6 +95,17 @@ class ArticleController extends Controller
         return response()->download($pathToFile, null, [], null);
     }
 
+    public function deleteFile($filename)
+    {
+      console.log("entra aqui");
+          unlink(storage_path('app/documents/'.$filename));
+          DB::table('documents')->where('filename', '=', $filename)->delete();
+
+          return response()->json([
+            'success' => 'File deleted successfully!'
+          ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -104,8 +115,8 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find($id);
-
-        return view('articles.edit', compact('article'));
+        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+        return view('articles.edit', compact('article','documents'));
     }
 
     /**
@@ -129,6 +140,16 @@ class ArticleController extends Controller
       $article->allowed = false;
       $article->save();
 
+      $documents = $request->documents;
+      if($documents != NULL) {
+          foreach($documents as $document){
+              $filename = $document->getClientOriginalName();
+              $document->storeAs('documents', $filename);
+
+              DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+          }
+      }
+
       return redirect('/articles')->with('success', 'Artículo actualizado');
     }
 
@@ -142,7 +163,6 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
 
-        // Revisar
         $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
 
         if($documents != NULL)
@@ -153,7 +173,7 @@ class ArticleController extends Controller
              DB::table('documents')->where('article_id', '=', $id)->delete();
             }
         }
-        
+
         $article->delete();
 
         return redirect('/articles')->with('success', 'Artículo borrado');

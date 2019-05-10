@@ -60,7 +60,6 @@ class AdminController extends Controller
 
         Articles_deleted::addDeleteArticle($article);
 
-        // Revisar
         $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
 
         if($documents != NULL)
