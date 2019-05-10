@@ -39,5 +39,5 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 
 });
 
-//	Route::delete('deleteFile/{filename}', 'ArticleController@deleteFile')->name('deleteFile');
+	Route::delete('/deleteFile/{filename}', 'ArticleController@deleteFile')->name('deleteFile');
 //Route::get('/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');

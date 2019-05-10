@@ -95,15 +95,23 @@ class ArticleController extends Controller
         return response()->download($pathToFile, null, [], null);
     }
 
+    /**
+     *
+     *
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function deleteFile($filename)
     {
-      console.log("entra aqui");
+          $article_id = DB::table('documents')->where('filename', $filename)->value('article_id');
           unlink(storage_path('app/documents/'.$filename));
           DB::table('documents')->where('filename', '=', $filename)->delete();
 
           return response()->json([
             'success' => 'File deleted successfully!'
           ]);
+        //  return edit(68);
+
     }
 
     /**
@@ -115,7 +123,7 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find($id);
-        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+        $documents = DB::table('documents')->where('article_id', $id)->get();
         return view('articles.edit', compact('article','documents'));
     }
 

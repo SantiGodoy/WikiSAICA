@@ -5,10 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Editar</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
+        <script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -64,68 +66,51 @@
                             </div>
                             <br>
                             <div>
-                          <!--    <script type="text/javascript">
-                                 function deleteFile () {
-                              //    var filename = document.getElementById('filename').innerHTML;
-                                  var filename = $(this).val();
-                                  console.log(filename);
-                                /*  $.ajax({
-                                    type: "DELETE",
-                                    url: "/deleteFile/"+filename,
-                                    data: {_method:'delete', _token: token},
-                                    success:alert("File deleted."),
-                                    error:  alert("File not deleted.")
-                                  }) */
-                                }
-                              </script>
-                              @foreach($documents as $document)
-                              <a id = "filename" href="{{route('download',$document)}}">{{$document}}</a> -->
 
-                            <!--  <form action="{{ route('deleteFile', $document)}}" method="post">
-                                  <button style="margin-left:20px;" value="{{$document}}">Eliminar</button>
-                              </form>
-                              @endforeach -->
+                              <script>
+                              function deleteFile (ident){
+                                  var filename = document.getElementById(ident).innerHTML;
+                                  var token = $("meta[name='csrf-token']").attr("content");
+
+                                  console.log(filename);
+                                  console.log(ident);
+
+                                  $.ajax(
+                                  {
+                                      url: "/deleteFile/"+filename,
+                                      type: 'DELETE',
+                                      data: {
+                                          "filename": filename,
+                                          "_token": token,
+                                      },
+                                      success: function (){
+                                          console.log("it Works");
+                                          $("input").remove("#"+ident);
+                                          $("a").remove("#"+ident);
+                                      //    alert("Fichero eliminado con éxito");
+                                      }
+                                  }).fail  (function(jqXHR, textStatus, errorThrown) {
+                                        alert("Error")   ;
+                                      });
+
+
+
+                              };
+                              </script>
+
                               <br>
-                              <br>
+                              <div>
+                              @foreach($documents as $document)
+                              <a id = "{{$document->id}}"  href="{{route('download',$document->filename)}}" style="margin-left: 40px;">{{$document->filename}}</a>
+                              <input  id = "{{$document->id}}" type = "button" value="Eliminar" style="margin-left:10px;" onclick="deleteFile('{{$document->id}}')"></input>
+                              @endforeach
+                            </div><br><br>
+
                               <input multiple="multiple" name="documents[]" type="file">
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </form>
-
-
-                  <!--      <script type="text/javascript">
-                               function deleteFile () {
-                            //    var filename = document.getElementById('filename').innerHTML;
-                                var filename = $(this).val();
-                               console.log(filename);
-                                $.ajax({
-                                  type: "DELETE",
-                                  url: "deleteFile/"+filename,
-                                  data: {_method:'delete', _token: token},
-                                  success:alert("File deleted."),
-                                  error:  alert("File not deleted.")
-                                })
-                              }
-                            </script>
-                            @foreach($documents as $document)
-                            <a id = "filename" href="{{route('download',$document)}}">{{$document}}</a>
-                            <button style="margin-left:20px;" value="{{$document}}" onclick="deleteFile()">Eliminar</button>
-                            @endforeach
-
-                            <script>
-
-                            function Funcion()
-                            {
-                              console.log("entra");
-                            }
-
-                            </script>
-
-                            <button onclick="Funcion()">Pincha</button> -->
-
-
-
 
                     </div>
                 </div>

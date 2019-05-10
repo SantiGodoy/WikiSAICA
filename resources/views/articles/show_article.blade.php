@@ -62,15 +62,15 @@
                       <br>
 
                 </div>
-                <div>
 
+                <div>
                   <h5>Documentos: </h5>
                   @foreach($documents as $document)
                   <a href="{{route('download',$document)}}">{{$document}}</a>
                  <br>
                   @endforeach
                 </div>
-
+      
                 <div style="text-align: right; right: 10%; position: static; width: 100% bottom: 5%; margin-bottom: 3%;">
                        <i style="margin-right:3%;">Última modificación: {{$article->updated_at}}</i>
                </div>
