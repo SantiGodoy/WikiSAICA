@@ -38,6 +38,7 @@
                                 <th scope="col">Modificador</th>
                                 <th scope="col" colspan="1">Acción</th>
                                 <th scope="col">Fecha</th>
+                                <th scope="col">Restaurar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,6 +76,7 @@
 
                                 <td>{{$article->last_action}}</td>
                                 <td id={{$article->id}}>{{$article->updated_at}}</td>
+                                <td><a href="{{ route('version.edit',$article->id)}}" class="btn btn-primary">Restaurar</a></td>
                             </tr>
                             @endforeach
                         </tbody>

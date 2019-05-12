@@ -24,6 +24,7 @@ class Articles_deleted extends Model
             ['title' => $article->title,
             'description' => $article->description,
             'department_id' => $article->department_id,
+            'id_article' => $article->id,
             'id_user' => $article->id_user,
             'updated_by' => $article->updated_by,
             'created_at' => $article->created_at,
