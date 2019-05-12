@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
 
-        <script type="text/javascript">
+        <!--<script type="text/javascript">
             function searchData() {
                 var input = document.getElementById("searchInput");
                 var filter = input.value.toUpperCase();
@@ -28,7 +28,7 @@
                     }
                 }
             }
-        </script>
+        </script>-->
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -51,7 +51,7 @@
                     <br>
                     @endif
 
-                    <!-- Search -->
+                    <!-- Search 
                     <table width=100%>
                         <tr>
                         <td width="80%">
@@ -67,7 +67,7 @@
                     </tr>
                     </table>
                     <br>
-
+                    -->
                     <!-- Table -->
                     <table class="table table-striped">
                         <thead class="thead-dark">
@@ -112,6 +112,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $articles->links() }}
                     <!--
                     <table class="table table-striped">
                         <thead>

@@ -17,7 +17,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $articles = $articles = DB::table('articles')->where('allowed', 'false')->orderBy('created_at', 'desc')->get();
+        $articles = $articles = DB::table('articles')->where('allowed', 'false')->orderBy('created_at', 'desc')->paginate(10);
         $user = null;
         return view('admin.index', compact('articles', 'user'));
     }
