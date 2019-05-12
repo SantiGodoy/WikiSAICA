@@ -8,27 +8,34 @@
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
-        <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
+
+        <!-- JQuery v3.4.0 & DataTable -->
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+        <link rel="stylesheet" href="{{ URL::asset('css/jquery.dataTables.min.css')}}"/>
         
-        <script type="text/javascript">
-            function searchData() {
-                var input = document.getElementById("searchInput");
-                var filter = input.value.toUpperCase();
-                var table = document.getElementById("tableData");
-                var tr = table.getElementsByTagName("tr");
-                var select = document.getElementById("searchSelect");
-                for(var i=0; i<tr.length; i++){
-                    var td = tr[i].getElementsByTagName("td")[select.options[select.selectedIndex].value];
-                    if (td){
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1){
-                            tr[i].style.display = "";
+        <script>
+            $(document).ready( function () {
+                $('#dataTable').DataTable({
+                    "ordering": false,
+                    "info": false,
+                    "language": {
+                        "lengthMenu": "Desplegar _MENU_ artículos por página.",
+                        "zeroRecords": "No se ha encontrado nada.",
+                        "infoEmpty": "No hay artículos disponibles",
+                        "loadingRecords": "Cargando...",
+                        "processing":     "Procesando...",
+                        "search":         "Buscar: ",
+                        "paginate": {
+                            "next":       "Siguiente",
+                            "previous":   "Anterior"
                         }
-                        else 
-                            tr[i].style.display = "none";
-                    }
-                }
-            }
+                    },
+                    "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "Todos"]]
+                });
+            });
         </script>
+
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -51,30 +58,18 @@
                     <br>
                     @endif
                     
-                    <!-- Search -->
-                    <table width=100%>
-                        <tr>
-                        <td width="80%">
-                            <input id="searchInput"class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" onkeyup="searchData()" autocomplete="off">
-                        </td>
-                        <td width="20%">
-                        <select id="searchSelect" class="custom-select">
-                            <option selected value="0">Título</option>
-                            <option value="1">Autor</option>
-                        </select>
-                        </td>
-                    </tr>
-                    </table>
-                    <br>
-
                     <!-- Table -->
-                    <table class="table table-striped">
+                    <table id="dataTable" class="table table-striped">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Título</th>
                                 <th scope="col">Autor</th>
                                 <th scope="col">Última modificación</th>
-                                <th scope="col" colspan="2">Acción</th>
+                                <!--<th scope="col" colspan="2">Acción</th>-->
+                                <th scope="col"></th>
+                                @if ((Auth::user()->role) == "admin")
+                                <th scope="col"></th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody id="tableData">
@@ -97,15 +92,15 @@
                                 </script>
                                 -->
                                 <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
+                                @if ((Auth::user()->role) == "admin")
                                 <td>
-                                    @if ((Auth::user()->role) == "admin")
                                     <form action="{{ route('admin.destroy', $article->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit">Eliminar</button>
                                     </form>
-                                    @endif
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
