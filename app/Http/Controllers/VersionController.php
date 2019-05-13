@@ -20,6 +20,17 @@ class VersionController extends Controller
         return view('admin.versions', compact('articles'));
     }
 
+    public function show($id)
+    {
+        $article = DB::table('versions')->where('id', $id)->first();
+        $user = DB::table('users')->where('id', $article->id_user)->first();
+        $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
+        $department = DB::table('departments')->where('id', $article->department_id)->first();
+        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+
+        return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents'));
+    }
+
     public function edit($id)
     {
         $article = Version::find($id);
