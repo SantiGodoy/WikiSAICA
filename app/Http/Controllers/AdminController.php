@@ -17,7 +17,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $articles = $articles = DB::table('articles')->where('allowed', 'false')->orderBy('created_at', 'desc')->paginate(10);
+        $articles = $articles = DB::table('articles')->where('allowed', 'false')->orderBy('created_at', 'desc')->get();
         $user = null;
         return view('admin.index', compact('articles', 'user'));
     }
@@ -48,6 +48,7 @@ class AdminController extends Controller
        	return $this->index();
     }
 
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -57,8 +58,6 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
-
-        Articles_deleted::addDeleteArticle($article);
 
         $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
 

@@ -161,6 +161,7 @@ class ArticleController extends Controller
       return redirect('/articles')->with('success', 'Artículo actualizado');
     }
 
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -170,6 +171,8 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
+
+        Articles_deleted::addDeleteArticle($article);
 
         $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
 

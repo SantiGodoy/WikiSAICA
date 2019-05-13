@@ -94,7 +94,7 @@
                                 <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
                                 @if ((Auth::user()->role) == "admin")
                                 <td>
-                                    <form action="{{ route('admin.destroy', $article->id)}}" method="post">
+                                    <form action="{{ route('articles.destroy', $article->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit">Eliminar</button>

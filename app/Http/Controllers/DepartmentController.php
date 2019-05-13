@@ -23,7 +23,7 @@ class DepartmentController extends Controller
 
     public function show($id)
     {
-        $articles = DB::table('articles')->where('allowed', 'true')->where('department_id', $id)->orderBy('created_at', 'desc')->paginate(10);
-        return view('articles.departments', compact('articles'));
+        $articles = DB::table('articles')->where('allowed', 'true')->where('department_id', $id)->orderBy('created_at', 'desc')->get();
+        return view('articles.index', compact('articles'));
     }
 }
