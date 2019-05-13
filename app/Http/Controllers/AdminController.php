@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Email;
+use App\User;
 use App\Article;
 use App\Version;
 use App\Articles_deleted;
@@ -30,7 +33,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-    	$article = Article::find($id);
+        $article = Article::find($id);
         $article->allowed = true;
         $article->timestamps = false;
         $article->save();
@@ -38,13 +41,28 @@ class AdminController extends Controller
         if($article->created_at == $article->updated_at)
         {
             Version::addVersion($article, 1);
+            $user = User::find($article->user_id);
+            Mail::raw("El artículo: ". $article->title. " ha sido permitido". $user->email, function ($message) use ($article, $user){
+                $message->from('tecnophonepw@gmail.com', 'Administración WikiSaica');
+                $message->to($user->email);
+                $message->subject('Articulo: '. $article->title. " permitido");
+            });
         }
         else
         {
             Version::addVersion($article, 0);
+            $user = User::find($article->updated_by);
+            Mail::raw("El artículo: ". $article->title. " ha sido permitido", function ($message) use ($article, $user){
+                $message->from('tecnophonepw@gmail.com', 'Administración WikiSaica');
+                $message->to($user->email);
+                $message->subject('Articulo: '. $article->title. " permitido");
+            });
         }
 
-    	error_log('Artículo');
+        error_log('Artículo');
+
+        
+
        	return $this->index();
     }
 
