@@ -13,29 +13,7 @@
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
         <link rel="stylesheet" href="{{ URL::asset('css/jquery.dataTables.min.css')}}"/>
-        
-        <script>
-            $(document).ready( function () {
-                $('#dataTable').DataTable({
-                    "ordering": false,
-                    "info": false,
-                    "language": {
-                        "lengthMenu": "Desplegar _MENU_ artículos por página.",
-                        "zeroRecords": "No se ha encontrado nada.",
-                        "infoEmpty": "No hay artículos disponibles",
-                        "loadingRecords": "Cargando...",
-                        "processing":     "Procesando...",
-                        "search":         "Buscar: ",
-                        "paginate": {
-                            "next":       "Siguiente",
-                            "previous":   "Anterior"
-                        }
-                    },
-                    "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "Todos"]]
-                });
-            });
-        </script>
-
+        <script src="{{ asset('js/dataTable.js')}}"></script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -59,20 +37,19 @@
                     @endif
                     
                     <!-- Table -->
-                    <table id="dataTable" class="table table-striped">
+                    <table class="table table-striped dataTable">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Título</th>
                                 <th scope="col">Autor</th>
                                 <th scope="col">Última modificación</th>
-                                <!--<th scope="col" colspan="2">Acción</th>-->
                                 <th scope="col"></th>
                                 @if ((Auth::user()->role) == "admin")
                                 <th scope="col"></th>
                                 @endif
                             </tr>
                         </thead>
-                        <tbody id="tableData">
+                        <tbody>
                             @foreach($articles as $article)
                             <tr>
                                 <td>{{$article->title}}</td>
@@ -84,13 +61,6 @@
                                     var dmy = date[0].split("-");
                                     document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
                                 </script>
-                                <!--
-                                <td id={{$article->id}}>{{$article->description}}</td>
-                                <script type="text/javascript">
-                                    var id = @json($article->id);
-                                    document.getElementById(id).innerHTML = @json($article->description);
-                                </script>
-                                -->
                                 <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
                                 @if ((Auth::user()->role) == "admin")
                                 <td>

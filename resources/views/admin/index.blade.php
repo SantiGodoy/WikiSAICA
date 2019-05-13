@@ -10,25 +10,11 @@
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
 
-        <!--<script type="text/javascript">
-            function searchData() {
-                var input = document.getElementById("searchInput");
-                var filter = input.value.toUpperCase();
-                var table = document.getElementById("tableData");
-                var tr = table.getElementsByTagName("tr");
-                var select = document.getElementById("searchSelect");
-                for(var i=0; i<tr.length; i++){
-                    var td = tr[i].getElementsByTagName("td")[select.options[select.selectedIndex].value];
-                    if (td){
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1){
-                            tr[i].style.display = "";
-                        }
-                        else
-                            tr[i].style.display = "none";
-                    }
-                }
-            }
-        </script>-->
+        <!-- JQuery v3.4.0 & DataTable -->
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+        <link rel="stylesheet" href="{{ URL::asset('css/jquery.dataTables.min.css')}}"/>
+        <script src="{{ asset('js/dataTable.js')}}"></script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -51,35 +37,20 @@
                     <br>
                     @endif
 
-                    <!-- Search 
-                    <table width=100%>
-                        <tr>
-                        <td width="80%">
-                            <input id="searchInput"class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" onkeyup="searchData()" autocomplete="off">
-                        </td>
-                        <td width="20%">
-                        <select id="searchSelect" class="custom-select">
-                            <option selected value="0">Departamento</option>
-                            <option value="1">Título</option>
-                            <option value="2">Autor</option>
-                        </select>
-                        </td>
-                    </tr>
-                    </table>
-                    <br>
-                    -->
                     <!-- Table -->
-                    <table class="table table-striped">
+                    <table class="table table-striped dataTable">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Departamento</th>
                                 <th scope="col">Título</th>
                                 <th scope="col">Autor</th>
                                 <th scope="col">Fecha de subida</th>
-                                <th scope="col" colspan="3">Acciones</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody id="tableData">
+                        <tbody>
                             @foreach($articles as $article)
                             <tr>
                                 <td>{{App\Department::getDepartment($article->department_id)->name}}</td>
@@ -92,13 +63,6 @@
                                     var dmy = date[0].split("-");
                                     document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
                                 </script>
-                                <!--
-                                <td id={{$article->id}}>{{$article->description}}</td>
-                                <script type="text/javascript">
-                                    var id = @json($article->id);
-                                    document.getElementById(id).innerHTML = @json($article->description);
-                                </script>
-                                -->
                                 <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
                                 <td><a href="{{ route('admin.edit',$article->id)}}" class="btn btn-primary">Permitir</a></td>
                                 <td>
@@ -112,40 +76,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!--
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>Article Title</td>
-                                <td>Article Description</td>
-                                <td colspan="2">Action</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($articles as $article)
-                            <tr>
-                                <td><a href="{{ route('articles.show',$article->id)}}">{{$article->title}}</a></td>
-                                <td id={{$article->id}}>{{$article->description}}</td>
-                                <script type="text/javascript">
-                                    var id = @json($article->id);
-                                    document.getElementById(id).innerHTML = @json($article->description);
-                                </script>
-                                <td><a href="{{ route('admin.edit',$article->id)}}" class="btn btn-primary">Permitir</a></td>
-                                <td>
-                                    <form action="{{ route('articles.destroy', $article->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    -->
                 <div>
             </div>
-
         </div>
     </body>
 </html>
