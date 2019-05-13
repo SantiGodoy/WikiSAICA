@@ -105,7 +105,7 @@
                                     <form action="{{ route('articles.destroy', $article->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                                        <button class="btn btn-danger" type="submit">Rechazar</button>
                                     </form>
                                 </td>
                             </tr>
