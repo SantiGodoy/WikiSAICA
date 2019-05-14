@@ -72,4 +72,13 @@ class VersionController extends Controller
         }
         return back();
     }
+
+    public function destroy($id)
+    {
+        $version = Version::find($id);
+
+        $version->delete();
+
+        return back();
+    }
 }

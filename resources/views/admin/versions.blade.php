@@ -48,6 +48,7 @@
                                 <th scope="col">Fecha</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,6 +68,13 @@
                                 </script>
                                 <td><a href="{{ route('version.edit',$article->id)}}" class="btn btn-primary">Restaurar</a></td>
                                 <td><a href="{{ route('version.show',$article->id)}}" class="btn btn-primary">Ver versión</a></td>
+                                <td>
+                                    <form action="{{ route('version.destroy', $article->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit">Eliminar versión</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
