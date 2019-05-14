@@ -28,7 +28,8 @@ Route::group( ['middleware' => 'auth' ], function()
     Route::get('admin/ajuda', 'AdminController@ajuda');
     Route::resource('articles', 'ArticleController');
     Route::resource('departments', 'DepartmentController');
-		Route::get('files/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');
+        Route::get('files/{filename}', 'ArticleController@getFile' )->name('download')->middleware('auth');
+    Route::resource('users', "UserController");
 
 });
 
