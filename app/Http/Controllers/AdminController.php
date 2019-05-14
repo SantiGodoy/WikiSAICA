@@ -8,7 +8,6 @@ use App\Mail\Email;
 use App\User;
 use App\Article;
 use App\Version;
-use App\Articles_deleted;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
