@@ -40,7 +40,7 @@ class AdminController extends Controller
         if($article->created_at == $article->updated_at)
         {
             Version::addVersion($article, 1);
-            $user = User::find($article->user_id);
+            $user = User::find($article->id_user)->first();
             Mail::raw("El artículo: ". $article->title. " ha sido permitido". $user->email, function ($message) use ($article, $user){
                 $message->from('tecnophonepw@gmail.com', 'Administración WikiSaica');
                 $message->to($user->email);
