@@ -106,7 +106,6 @@ class ArticleController extends Controller
     public function deleteFile($filename)
     {
           $article_id = DB::table('documents')->where('filename', $filename)->value('article_id');
-          unlink(storage_path('app/documents/'.$filename));
           DB::table('documents')->where('filename', '=', $filename)->delete();
 
           return response()->json([
@@ -163,7 +162,7 @@ class ArticleController extends Controller
       return redirect('/articles')->with('success', 'Artículo actualizado');
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      *
