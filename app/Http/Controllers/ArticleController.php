@@ -20,7 +20,8 @@ class ArticleController extends Controller
     {
         $articles = $articles = DB::table('articles')->where('allowed', 'true')->orderBy('created_at', 'desc')->get();
         $user =  Auth::user();
-        return view('articles.index', compact('articles', 'user'));
+        $title = "Artículos";
+        return view('articles.index', compact('articles', 'user','title'));
     }
 
     /**
