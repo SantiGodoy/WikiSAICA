@@ -57,7 +57,7 @@
                                 <td>{{$article->title}}</td>
                                 <td>{{App\Article::getOwner($article)->name}}</td>
                                 <td>{{App\Article::getModifier($article)->name}}</td>
-                                
+
                                 <td>{{$article->last_action}}</td>
                                 <td id={{$article->id}}>{{$article->updated_at}}</td>
                                 <script>
@@ -66,7 +66,10 @@
                                     var dmy = date[0].split("-");
                                     document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
                                 </script>
-                                <td><a href="{{ route('version.edit',$article->id)}}" class="btn btn-primary">Restaurar</a></td>
+                                <td>
+                                  Articulo id: {{$article->id}}
+                                  <br>
+                                  <a href="{{ route('version.edit',$article->id)}}" class="btn btn-primary">Restaurar</a></td>
                                 <td><a href="{{ route('version.show',$article->id)}}" class="btn btn-primary">Ver versión</a></td>
                                 <td>
                                     <form action="{{ route('version.destroy', $article->id)}}" method="post">

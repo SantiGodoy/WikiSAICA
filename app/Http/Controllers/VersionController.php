@@ -38,7 +38,7 @@ class VersionController extends Controller
         $new = new Article;
         if($actual != NULL)
         {
-            Version::addVersion($actual, 0);  
+            Version::addVersion($actual, 0);
             $new->title = $article->title;
             $new->description = $article->description;
             $new->id = $article->id_article;
@@ -48,15 +48,35 @@ class VersionController extends Controller
             $new->created_at = $article->created_at;
             $timestamp = now();
             $new->updated_at = $timestamp;
-            $new->allowed = true;   
+            $new->allowed = true;
+
+            //Me creo un articulo vacio, luego le añado documentos y quiero volver al vacio.
+              $actualDocuments = DB::table('documents')->where('article_id', $actual->id)->get();
+
+              if($actualDocuments != NULL) //Si hay documentos asociados, los guardo en la tabla de eliminados y lo elimino de la tabla docprops
+              {
+                foreach ($actualDocuments as $document) {
+
+                  DB::table('documents_deleted')->insert(
+                      ['article_id' => $document->article_id,
+                        'filename' => $document->filename,
+                        "created_at" =>  \Carbon\Carbon::now(),
+                        "updated_at" => \Carbon\Carbon::now()]
+                  );
+
+                  DB::table('documents')->where('id', '=', $document->id)->delete();
+                }
+              }
+
             $actual->delete();
+
             $new->save();
         }
         else
         {
             $deleted = DB::table('articles_deleted')->where('id_article', $article->id_article)->first();
             $article->id = $deleted->id_article;
-            Version::addVersion($article, 0);  
+            Version::addVersion($article, 0);
             $new->id = $deleted->id_article;
             $new->title = $article->title;
             $new->description = $article->description;
@@ -66,7 +86,7 @@ class VersionController extends Controller
             $new->created_at = $article->created_at;
             $timestamp = now();
             $new->updated_at = $timestamp;
-            $new->allowed = true;   
+            $new->allowed = true;
             $new->save();
             DB::table('articles_deleted')->where('id', $deleted->id)->delete();
         }

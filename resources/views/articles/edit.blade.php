@@ -68,32 +68,35 @@
                             <div>
 
                               <script>
-                              function deleteFile (ident){
-                                  var filename = document.getElementById(ident).innerHTML;
+                              function hola (ident){
+                              //    var filename = document.getElementById(ident).innerHTML;
                                   var token = $("meta[name='csrf-token']").attr("content");
-
-                                  console.log(filename);
+                                //  console.log(filename);
                                   console.log(ident);
 
                                   $.ajax(
                                   {
-                                      url: "/deleteFile/"+filename,
-                                      type: 'DELETE',
+                                      url: "/deleteFile/"+ident,
+                                    //  type: 'POST' ,
                                       data: {
-                                          "filename": filename,
-                                          "_token": token,
+                                          id: ident,
+                                          _token: token,
                                       },
                                       success: function (){
                                           console.log("it Works");
                                           $("input").remove("#"+ident);
                                           $("a").remove("#"+ident);
                                       //    alert("Fichero eliminado con éxito");
-                                      }
+                                    }
+
+                                   /*error: function(xhr, ajaxOptions, thrownError) {
+                                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                    } */
                                   }).fail  (function(jqXHR, textStatus, errorThrown) {
                                         alert("Error")   ;
                                       });
 
-
+                                        console.log("Aqui llega");
 
                               };
                               </script>
@@ -102,7 +105,8 @@
                               <div>
                               @foreach($documents as $document)
                               <a id = "{{$document->id}}"  href="{{route('download',$document->filename)}}" style="margin-left: 40px;">{{$document->filename}}</a>
-                              <input  id = "{{$document->id}}" type = "button" value="Eliminar" style="margin-left:10px;" onclick="deleteFile('{{$document->id}}')"></input>
+                              {{$document->id}}
+                              <input  id = "{{$document->id}}" type = "button" value="Eliminar" style="margin-left:10px;" onclick="hola('{{$document->id}}')"></input>
                               @endforeach
                             </div><br><br>
 

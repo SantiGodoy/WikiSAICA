@@ -104,15 +104,22 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function deleteFile($filename)
+    public function deleteFile($id)
     {
-          $article_id = DB::table('documents')->where('filename', $filename)->value('article_id');
-          DB::table('documents')->where('filename', '=', $filename)->delete();
+          $document = DB::table('documents')->where('id', '=', $id)->first();
+          DB::table('documents_deleted')->insert(
+              ['article_id' => $document->article_id,
+                'filename' => $document->filename,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now()]
+          );
 
-          return response()->json([
+          DB::table('documents')->where('id', '=', $id)->delete();
+
+        /*  return response()->json([
             'success' => 'File deleted successfully!'
-          ]);
-        //  return edit(68);
+          ]); */
+
 
     }
 
