@@ -67,8 +67,6 @@
                                     document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
                                 </script>
                                 <td>
-                                  Articulo id: {{$article->id}}
-                                  <br>
                                   <a href="{{ route('version.edit',$article->id)}}" class="btn btn-primary">Restaurar</a></td>
                                 <td><a href="{{ route('version.show',$article->id)}}" class="btn btn-primary">Ver versión</a></td>
                                 <td>

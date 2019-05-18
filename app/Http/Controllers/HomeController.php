@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $departments = DB::table('departments')->get();
+        $departments = DB::table('departments')->orderBy('name', 'asc')->get();
         return view('index', compact('departments','user'));
     }
 }

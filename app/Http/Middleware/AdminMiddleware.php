@@ -19,7 +19,7 @@ class AdminMiddleware
     {
     	if ($request->user() && $request->user()->role != 'admin')
 			{
-        $departments = DB::table('departments')->get();
+        $departments = DB::table('departments')->orderBy('name', 'asc')->get();
 				return new Response(view('index', compact('departments')));
 			}
 

@@ -19,7 +19,7 @@ Route::group( ['middleware' => 'auth' ], function()
 {
 	Route::get('/', function () {
     $user = Auth::user();
-    $departments = DB::table('departments')->get();
+    $departments = DB::table('departments')->orderBy('name', 'asc')->get();
     $articles = DB::table('articles')->get();
     return view('index', compact('departments','articles','user'));
 });

@@ -105,7 +105,6 @@
                               <div>
                               @foreach($documents as $document)
                               <a id = "{{$document->id}}"  href="{{route('download',$document->filename)}}" style="margin-left: 40px;">{{$document->filename}}</a>
-                              {{$document->id}}
                               <input  id = "{{$document->id}}" type = "button" value="Eliminar" style="margin-left:10px;" onclick="hola('{{$document->id}}')"></input>
                               @endforeach
                             </div><br><br>
