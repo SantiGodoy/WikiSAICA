@@ -56,13 +56,12 @@ class VersionController extends Controller
             Version::addVersion($new, 0);
 
             $version = Version::all()->last();
-            //En el caso de que tenga q recuperar una version con docs.
-            //cuando restauro una versión, se crea una version nueva. Documentos asociados a esa version y cambiarle la version.
+
             $docs = DB::table('documents')->where('article_version', $id)->get();
             if($docs != null)
             {
               foreach ($docs as $doc) {
-                //insertar con la version cambiada
+
                   if(DB::table('documents')->where('id', $doc->id)->value('deleted'))
                     DB::table('documents')->where('id', $doc->id)->update(['deleted' => 'false']);
 
