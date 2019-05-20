@@ -23,7 +23,7 @@ class Version extends Model
           $version = new Version;
           $version->title = $article->title;
           $version->description = $article->description;
-          $version->id_article = $article->id;
+          $version->id_article = $article->id; //MIRAR
           $version->department_id = $article->department_id;
           $version->id_user = $article->id_user;
           $version->updated_by = $article->updated_by;
@@ -38,7 +38,7 @@ class Version extends Model
           }
           $version->save();
       }
-	
+
 public static function addDeleteVersion($article)
 {
 	  $version = new Version;

@@ -37,35 +37,53 @@ class AdminController extends Controller
         $article->timestamps = false;
         $article->save();
         $article->timestamps = true;
-        if($article->created_at == $article->updated_at)
+        if($article->created_at == $article->updated_at)//si ha sido creado
         {
             Version::addVersion($article, 1);
             $user = User::find($article->id_user)->first();
+
+            $documents = DB::table('documents')->where('article_id', $id)->get();
+            if($documents != NULL)
+            {
+              $version = DB::table('versions')->where('id_article', $id)->first();
+              foreach ($documents as $doc) {
+                DB::table('documents')->where('id', $doc->id)->update(['article_version' => $version->id]);
+              }
+            }
             Mail::raw("El artículo: ". $article->title. " ha sido permitido". $user->email, function ($message) use ($article, $user){
                 $message->from('tecnophonepw@gmail.com', 'Administración WikiSaica');
                 $message->to($user->email);
                 $message->subject('Articulo: '. $article->title. " permitido");
             });
         }
-        else
-        {
+        else {
             Version::addVersion($article, 0);
             $user = User::find($article->updated_by);
+
+            $documents = DB::table('documents')->where([['article_id', $id],['article_version', null],])->get();
+            if($documents != NULL)
+            {
+              $version = DB::table('versions')->where('id_article', $id)->orderBy('updated_at', 'desc')->first();
+              foreach ($documents as $doc) {
+                DB::table('documents')->where('id', $doc->id)->update(['article_version' => $version->id]);
+              }
+            }
+
             Mail::raw("El artículo: ". $article->title. " ha sido permitido", function ($message) use ($article, $user){
                 $message->from('tecnophonepw@gmail.com', 'Administración WikiSaica');
                 $message->to($user->email);
                 $message->subject('Articulo: '. $article->title. " permitido");
             });
-        }
+         }
 
         error_log('Artículo');
 
-        
+
 
        	return $this->index();
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -76,7 +94,7 @@ class AdminController extends Controller
     {
         $article = Article::find($id);
 
-        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+        $documents = DB::table('documents')->where([['article_id', $id],['article_version', null],])->pluck('filename');
 
         if($article->created_at == $article->updated_at)
         {
@@ -85,7 +103,7 @@ class AdminController extends Controller
                 foreach($documents as $document)
                 {
                     unlink(storage_path('app/documents/'.$document));
-                    DB::table('documents')->where('article_id', '=', $id)->delete();
+                    DB::table('documents')->where([['article_id', $id],['article_version', null],])->delete();
                 }
             }
 
@@ -94,17 +112,28 @@ class AdminController extends Controller
 
         else{
             $new = new Article;
-            $restaurado = DB::table('versions')->where('id_article', $article->id)->orderBy('updated_at','desc')->first();
+            $restaurado = DB::table('versions')->where('id_article', $article->id)->orderBy('updated_at','desc')->first(); //version
             $article->delete();
+
+            $documents = DB::table('documents')->where([['article_id', $id],['article_version', null],])->pluck('filename');
+            if($documents != NULL)
+            {
+                foreach($documents as $document)
+                {
+                    unlink(storage_path('app/documents/'.$document));
+                    DB::table('documents')->where([['article_id', $id],['article_version', null],])->delete();
+                }
+            }
+
             $new->title = $restaurado->title;
             $new->description = $restaurado->description;
-            $new->id = $restaurado->id;
+            $new->id = $restaurado->id_article;
             $new->department_id = $restaurado->department_id;
             $new->id_user = $restaurado->id_user;
             $new->updated_by = $restaurado->updated_by;
             $new->created_at = $restaurado->created_at;
             $new->updated_at = $restaurado->updated_at;
-            $new->allowed = true;   
+            $new->allowed = true;
             $new->save();
         }
 

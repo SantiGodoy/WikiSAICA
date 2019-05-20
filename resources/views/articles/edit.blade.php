@@ -68,7 +68,7 @@
                             <div>
 
                               <script>
-                              function hola (ident){
+                              function deleteFile (ident){
                               //    var filename = document.getElementById(ident).innerHTML;
                                   var token = $("meta[name='csrf-token']").attr("content");
                                 //  console.log(filename);
@@ -105,7 +105,7 @@
                               <div>
                               @foreach($documents as $document)
                               <a id = "{{$document->id}}"  href="{{route('download',$document->filename)}}" style="margin-left: 40px;">{{$document->filename}}</a>
-                              <input  id = "{{$document->id}}" type = "button" value="Eliminar" style="margin-left:10px;" onclick="hola('{{$document->id}}')"></input>
+                              <input  id = "{{$document->id}}" type = "button" value="Eliminar" style="margin-left:10px;" onclick="deleteFile('{{$document->id}}')"></input>
                               @endforeach
                             </div><br><br>
 

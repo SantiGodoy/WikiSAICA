@@ -26,7 +26,7 @@ class VersionController extends Controller
         $user = DB::table('users')->where('id', $article->id_user)->first();
         $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
         $department = DB::table('departments')->where('id', $article->department_id)->first();
-        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+        $documents = DB::table('documents')->where('article_version', $id)->pluck('filename');
 
         return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents'));
     }
@@ -38,7 +38,7 @@ class VersionController extends Controller
         $new = new Article;
         if($actual != NULL)
         {
-            Version::addVersion($actual, 0);
+
             $new->title = $article->title;
             $new->description = $article->description;
             $new->id = $article->id_article;
@@ -50,27 +50,26 @@ class VersionController extends Controller
             $new->updated_at = $timestamp;
             $new->allowed = true;
 
-            //Me creo un articulo vacio, luego le añado documentos y quiero volver al vacio.
-              $actualDocuments = DB::table('documents')->where('article_id', $actual->id)->get();
-
-              if($actualDocuments != NULL) //Si hay documentos asociados, los guardo en la tabla de eliminados y lo elimino de la tabla docprops
-              {
-                foreach ($actualDocuments as $document) {
-
-                  DB::table('documents_deleted')->insert(
-                      ['article_id' => $document->article_id,
-                        'filename' => $document->filename,
-                        "created_at" =>  \Carbon\Carbon::now(),
-                        "updated_at" => \Carbon\Carbon::now()]
-                  );
-
-                  DB::table('documents')->where('id', '=', $document->id)->delete();
-                }
-              }
-
             $actual->delete();
 
             $new->save();
+            Version::addVersion($new, 0);
+
+            $version = Version::all()->last();
+            //En el caso de que tenga q recuperar una version con docs.
+            //cuando restauro una versión, se crea una version nueva. Documentos asociados a esa version y cambiarle la version.
+            $docs = DB::table('documents')->where('article_version', $id)->get();
+            if($docs != null)
+            {
+              foreach ($docs as $doc) {
+                //insertar con la version cambiada
+                  if(DB::table('documents')->where('id', $doc->id)->value('deleted'))
+                    DB::table('documents')->where('id', $doc->id)->update(['deleted' => 'false']);
+
+                  DB::table('documents')->insert(['article_id' => $doc->article_id, 'filename'=> $doc->filename,'article_version' => $version->id, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'deleted' => 'false']);
+              }
+            }
+
         }
         else
         {
@@ -88,6 +87,9 @@ class VersionController extends Controller
             $new->updated_at = $timestamp;
             $new->allowed = true;
             $new->save();
+
+            //Aqui controlar los docs de los articulos eliminados
+
             DB::table('articles_deleted')->where('id', $deleted->id)->delete();
         }
         return back();
@@ -96,6 +98,8 @@ class VersionController extends Controller
     public function destroy($id)
     {
         $version = Version::find($id);
+
+        //Eliminar los documentos asociados a esa version
 
         $version->delete();
 

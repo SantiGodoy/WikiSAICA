@@ -50,7 +50,7 @@ class UserController extends Controller
             $new->updated_by = $restaurado->updated_by;
             $new->created_at = $restaurado->created_at;
             $new->updated_at = $restaurado->updated_at;
-            $new->allowed = true;   
+            $new->allowed = true;
             $article->delete();
             $new->save();
         }

@@ -61,7 +61,7 @@ class ArticleController extends Controller
                 $filename = $document->getClientOriginalName();
                 $document->storeAs('documents', $filename);
 
-                DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+              DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'deleted' => 'false']);
             }
         }
         return redirect('/articles')->with('success', 'Artículo añadido con éxito');
@@ -73,6 +73,8 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     //Mostrar la ultima version del articulo con ese id
     public function show($id)
     {
         $article = null;
@@ -85,8 +87,9 @@ class ArticleController extends Controller
             $user = DB::table('users')->where('id', $article->id_user)->first();
             $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
             $department = DB::table('departments')->where('id', $article->department_id)->first();
-            $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
-            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents'));
+            $version = DB::table('versions')->where('id_article', $id)->orderBy('updated_at','desc')->first();
+            $documents = DB::table('documents')->where([['article_id', '=', $id], ['article_version', '=', $version->id]])->pluck('filename');
+            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'version'));
         }
         else
             return redirect('');
@@ -106,21 +109,11 @@ class ArticleController extends Controller
      */
     public function deleteFile($id)
     {
-          $document = DB::table('documents')->where('id', '=', $id)->first();
-          DB::table('documents_deleted')->insert(
-              ['article_id' => $document->article_id,
-                'filename' => $document->filename,
-                "created_at" =>  \Carbon\Carbon::now(),
-                "updated_at" => \Carbon\Carbon::now()]
-          );
-
-          DB::table('documents')->where('id', '=', $id)->delete();
+          DB::table('documents')->where('id', '=', $id)->update(['deleted' => 'true']);
 
         /*  return response()->json([
             'success' => 'File deleted successfully!'
           ]); */
-
-
     }
 
     /**
@@ -132,7 +125,8 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find($id);
-        $documents = DB::table('documents')->where('article_id', $id)->get();
+        $version =  DB::table('versions')->where('id_article', $id)->orderBy('updated_at', 'desc')->first();
+        $documents = DB::table('documents')->where([['article_id', $id],['article_version', $version->id],])->get();
         return view('articles.edit', compact('article','documents'));
     }
 
@@ -157,14 +151,24 @@ class ArticleController extends Controller
       $article->allowed = false;
       $article->save();
 
-      $documents = $request->documents;
-      if($documents != NULL) {
-          foreach($documents as $document){
+      $newDocuments = $request->documents;
+      if($newDocuments != NULL) {
+          foreach($newDocuments as $document){
               $filename = $document->getClientOriginalName();
               $document->storeAs('documents', $filename);
 
-              DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+              DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'deleted' => 'false']);
           }
+      }
+
+      //Miro si ya tenia docs asociados a la version de ese Articulo
+      $version = DB::table('versions')->where('id_article', $id)->orderBy('updated_at', 'desc')->first();
+      $actualDocuments = DB::table('documents')->where([['article_version', $version->id],['deleted', 'false'],])->get();
+      if($actualDocuments != NULL)
+      {
+        foreach($actualDocuments as $documents){
+            DB::table('documents')->insert(['article_id' => $article->id, 'filename'=> $documents->filename, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+        }
       }
 
       return redirect('/articles')->with('success', 'Artículo actualizado');

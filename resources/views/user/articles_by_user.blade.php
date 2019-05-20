@@ -35,7 +35,7 @@
                     </div>
                     <br>
                     @endif
-                    
+
                     <!-- Table -->
                     <table class="table table-striped dataTable">
                         <thead class="thead-dark">

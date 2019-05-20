@@ -25,6 +25,7 @@
             <div class="container" style= " margin-left: 0">
                 <div style="margin-top: 30px; position:static; min-height:85%;">
                     <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
+            
                     <div style="text-align: left;">
                         <a href="{{ route('articles.edit',$article->id)}}">Editar</a>
                     </div>
@@ -72,7 +73,7 @@
                   @endforeach
                 </div>
                 @endif
-                
+
                 <div style="text-align: right; right: 10%; position: static; width: 100% bottom: 5%; margin-bottom: 3%;">
                        <i style="margin-right:3%;">Última modificación: {{$article->updated_at}}</i>
                </div>
