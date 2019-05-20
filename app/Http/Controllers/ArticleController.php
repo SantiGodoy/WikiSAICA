@@ -187,16 +187,16 @@ class ArticleController extends Controller
 
         Articles_deleted::addDeleteArticle($article);
 
-        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+    /*    $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
 
         if($documents != NULL)
         {
             foreach($documents as $document)
             {
-             unlink(storage_path('app/documents/'.$document));
+             //unlink(storage_path('app/documents/'.$document));
              DB::table('documents')->where('article_id', '=', $id)->delete();
             }
-        }
+        } */
 
         $article->delete();
 

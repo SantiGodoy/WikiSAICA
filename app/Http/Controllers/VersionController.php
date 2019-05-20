@@ -74,7 +74,7 @@ class VersionController extends Controller
         {
             $deleted = DB::table('articles_deleted')->where('id_article', $article->id_article)->first();
             $article->id = $deleted->id_article;
-            Version::addVersion($article, 0);
+
             $new->id = $deleted->id_article;
             $new->title = $article->title;
             $new->description = $article->description;
@@ -87,6 +87,21 @@ class VersionController extends Controller
             $new->allowed = true;
             $new->save();
 
+            Version::addVersion($new, 0);
+
+            $version = Version::all()->last();
+            $docs = DB::table('documents')->where('article_version', $id)->get();
+            if($docs != null)
+            {
+              foreach ($docs as $doc) {
+
+            //      if(DB::table('documents')->where('id', $doc->id)->value('deleted'))
+          //          DB::table('documents')->where('id', $doc->id)->update(['deleted' => 'false']);
+
+                  DB::table('documents')->insert(['article_id' => $doc->article_id, 'filename'=> $doc->filename,'article_version' => $version->id, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'deleted' => 'false']);
+              }
+            }
+
             //Aqui controlar los docs de los articulos eliminados
 
             DB::table('articles_deleted')->where('id', $deleted->id)->delete();
@@ -98,6 +113,7 @@ class VersionController extends Controller
     {
         $version = Version::find($id);
 
+  //      $documents = DB::table('documents')->where('article_version', $id)->delete();
         //Eliminar los documentos asociados a esa version
 
         $version->delete();

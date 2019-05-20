@@ -102,10 +102,10 @@ class AdminController extends Controller
             {
                 foreach($documents as $document)
                 {
-                    unlink(storage_path('app/documents/'.$document));
+                  //  unlink(storage_path('app/documents/'.$document));
                     DB::table('documents')->where([['article_id', $id],['article_version', null],])->delete();
                 }
-            }
+            } 
 
             $article->delete();
         }
@@ -120,7 +120,7 @@ class AdminController extends Controller
             {
                 foreach($documents as $document)
                 {
-                    unlink(storage_path('app/documents/'.$document));
+                  //  unlink(storage_path('app/documents/'.$document));
                     DB::table('documents')->where([['article_id', $id],['article_version', null],])->delete();
                 }
             }
