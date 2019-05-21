@@ -27,7 +27,7 @@
                     margin-top: 40px;
                 }
             </style>
-
+                
             <div class="container">
                 <div class="uper">
                     @if(session()->get('success'))
@@ -36,7 +36,6 @@
                     </div>
                     <br>
                     @endif
-
                     <!-- Table -->
                     <table class="table table-striped dataTable">
                         <thead class="thead-dark">
@@ -76,6 +75,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <a href="{{ route('admin.show', 3)}}" class="btn btn-primary">Estadísticas</a>
                 <div>
             </div>
         </div>
