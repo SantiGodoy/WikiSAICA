@@ -88,7 +88,11 @@ class ArticleController extends Controller
             $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
             $department = DB::table('departments')->where('id', $article->department_id)->first();
             $version = DB::table('versions')->where('id_article', $id)->orderBy('updated_at','desc')->first();
-            $documents = DB::table('documents')->where([['article_id', '=', $id], ['article_version', '=', $version->id]])->pluck('filename');
+
+            $documents = null;
+            if($version != null)
+              $documents = DB::table('documents')->where([['article_id', '=', $id], ['article_version', '=', $version->id]])->pluck('filename');
+
             $isVersion = 0;
             return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'version', 'isVersion'));
         }
@@ -203,6 +207,4 @@ class ArticleController extends Controller
 
         return redirect('/articles')->with('success', 'Artículo borrado');
     }
-
-
 }

@@ -115,12 +115,16 @@ class VersionController extends Controller
         $version = Version::find($id);
 
         $article = Article::find($version->id_article);
-
+        $article2 = DB::table('article_deleted')->where('id',$id)->first();
         $documents = DB::table('documents')->where('article_version', $id)->delete();
 
         $version->delete();
-        $article->delete();
-        
+
+        if($article != null)
+          $article->delete();
+        if($article2 != null)
+          $article->delete();
+
         return back();
     }
 }

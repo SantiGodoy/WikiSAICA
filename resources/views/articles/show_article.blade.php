@@ -66,7 +66,8 @@
 
                 </div>
 
-                @if(sizeof($documents) > 0)
+
+                @if(!is_null($documents))    
                 <div>
                   <h5>Documentos: </h5>
                   @foreach($documents as $document)
