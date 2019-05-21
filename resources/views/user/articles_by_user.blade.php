@@ -52,16 +52,19 @@
                             <tr>
                                 <td>{{$article->title}}</td>
                                 <td>{{App\Article::getOwner($article)->name}}</td>
-                                <td id={{$article->id}}>{{$article->updated_at}}</td>
+                            <!--    <td id={{$article->id}}>{{$article->updated_at}}</td> -->
+                                    <td id={{$article->id_article}}>{{$article->updated_at}}</td>
                                 <script>
-                                    var id = @json($article->id);
+                                  //  var id = @json($article->id);
+                                      var id = @json($article->id_article);
                                     var date = document.getElementById(id).innerHTML.split(" ");
                                     var dmy = date[0].split("-");
                                     document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
                                 </script>
                                 <td><a href="{{ route('users.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
                                 <td>
-                                    <form action="{{ route('users.destroy', $article->id)}}" method="post">
+                                  <!--  <form action="{{ route('users.destroy', $article->id)}}" method="post"> -->
+                                        <form action="{{ route('users.destroy', $article->id_article)}}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger" type="submit">Eliminar</button>

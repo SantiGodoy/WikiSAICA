@@ -7,6 +7,8 @@ use App\Article;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use App\Version;
+
 class UserController extends Controller
 {
      /**
@@ -17,17 +19,23 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $articles = DB::table('articles')->where('id_user', $user->id)->orWhere('updated_by', $user->id)->orderBy('updated_at', 'desc')->get();
+    //    $articles = DB::table('articles')->where('id_user', $user->id)->orWhere('updated_by', $user->id)->orderBy('updated_at', 'desc')->get();
+         $articles = DB::table('versions')->where('id_user', $user->id)->orWhere('updated_by', $user->id)->orderBy('updated_at', 'desc')->get();
         return view('user.articles_by_user', compact('articles'));
     }
 
     public function show($id)
     {
-        $article = Article::find($id);
+      //  $article = Article::find($id);
+        $version = Version::find($id);
+
+
+        $article = Article::find($version->id_article);
         $user = DB::table('users')->where('id', $article->id_user)->first();
         $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
         $department = DB::table('departments')->where('id', $article->department_id)->first();
-        $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+    //    $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
+          $documents = DB::table('documents')->where([['article_id', $article->id],['article_version', $id],])->pluck('filename');
         return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents'));
     }
 
