@@ -6,7 +6,7 @@
         <title>{{$article->title}}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
         <script src="https://cdn.ckeditor.com/4.11.3/standard-all/ckeditor.js"></script>
     </head>
@@ -25,10 +25,12 @@
             <div class="container" style= " margin-left: 0">
                 <div style="margin-top: 30px; position:static; min-height:85%;">
                     <h1 id="firstHeading" class="firstHeading" >{{$article->title}}</h1>
-            
+
+                    @if($isVersion == 0)
                     <div style="text-align: left;">
                         <a href="{{ route('articles.edit',$article->id)}}">Editar</a>
                     </div>
+                    @endif
                     <br>
 
                     <div class = "column" style="float: right; width: 40%; padding-left:5%;">

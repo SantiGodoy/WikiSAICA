@@ -27,8 +27,9 @@ class VersionController extends Controller
         $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
         $department = DB::table('departments')->where('id', $article->department_id)->first();
         $documents = DB::table('documents')->where('article_version', $id)->pluck('filename');
+        $isVersion = 1;
 
-        return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents'));
+        return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'isVersion'));
     }
 
     public function edit($id)
