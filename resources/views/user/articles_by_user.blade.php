@@ -67,7 +67,9 @@
                                         <form action="{{ route('users.destroy', $article->id_article)}}" method="post">
                                         @csrf
                                         @method('DELETE')
+                                        @if ((Auth::user()->role) == "admin")
                                         <button class="btn btn-danger" type="submit">Eliminar</button>
+                                        @endif
                                     </form>
                                 </td>
                             </tr>
