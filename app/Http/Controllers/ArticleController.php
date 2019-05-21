@@ -89,7 +89,8 @@ class ArticleController extends Controller
             $department = DB::table('departments')->where('id', $article->department_id)->first();
             $version = DB::table('versions')->where('id_article', $id)->orderBy('updated_at','desc')->first();
             $documents = DB::table('documents')->where([['article_id', '=', $id], ['article_version', '=', $version->id]])->pluck('filename');
-            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'version'));
+            $isVersion = 0;
+            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'version', 'isVersion'));
         }
         else
             return redirect('');
