@@ -63,7 +63,7 @@
                                     var dmy = date[0].split("-");
                                     document.getElementById(id).innerHTML = dmy[2]+"-"+dmy[1]+"-"+dmy[0]+" / "+date[1];
                                 </script>
-                                <td><a href="{{ route('articles.show',$article->id)}}" class="btn btn-primary">Ver</a></td>
+                                <td><a href="{{ route('article',$article->id)}}" class="btn btn-primary">Ver</a></td>
                                 <td><a href="{{ route('admin.edit',$article->id)}}" class="btn btn-primary">Permitir</a></td>
                                 <td>
                                     <form action="{{ route('admin.destroy', $article->id)}}" method="post">

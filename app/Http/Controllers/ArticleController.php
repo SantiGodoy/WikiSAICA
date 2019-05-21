@@ -89,9 +89,31 @@ class ArticleController extends Controller
             $department = DB::table('departments')->where('id', $article->department_id)->first();
             $version = DB::table('versions')->where('id_article', $id)->orderBy('updated_at','desc')->first();
 
-            $documents = null;
-            if($version != null)
-              $documents = DB::table('documents')->where([['article_id', '=', $id], ['article_version', '=', $version->id]])->pluck('filename');
+          //  $documents = null;
+            //if($version != null)
+            $documents = DB::table('documents')->where([['article_id', '=', $id], ['article_version', '=', $version->id]])->pluck('filename');
+
+            $isVersion = 0;
+            return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'version', 'isVersion'));
+        }
+        else
+            return redirect('');
+    }
+
+    public function showToAdmin($id)
+    {
+        $article = null;
+        if((Auth::user()->role) == "admin")
+            $article = DB::table('articles')->where('id', $id)->first();
+        else
+            $article = DB::table('articles')->where('id', $id)->where('allowed', 'true')->first();
+        if($article != null)
+        {
+            $user = DB::table('users')->where('id', $article->id_user)->first();
+            $userUpdate = DB::table('users')->where('id', $article->updated_by)->first();
+            $department = DB::table('departments')->where('id', $article->department_id)->first();
+            $version = DB::table('versions')->where('id_article', $id)->orderBy('updated_at','desc')->first();
+            $documents = DB::table('documents')->where([['article_id', '=', $id], ['article_version', '=', null],])->pluck('filename');
 
             $isVersion = 0;
             return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'version', 'isVersion'));
