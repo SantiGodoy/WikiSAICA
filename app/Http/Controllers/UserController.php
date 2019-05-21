@@ -36,7 +36,8 @@ class UserController extends Controller
         $department = DB::table('departments')->where('id', $article->department_id)->first();
     //    $documents = DB::table('documents')->where('article_id', $id)->pluck('filename');
           $documents = DB::table('documents')->where([['article_id', $article->id],['article_version', $id],])->pluck('filename');
-        return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents'));
+        $isVersion = 1;
+        return view('articles.show_article', compact('article', 'user', 'userUpdate', 'department','documents', 'isVersion'));
     }
 
     public function destroy($id)

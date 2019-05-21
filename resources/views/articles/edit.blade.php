@@ -64,6 +64,16 @@
                                         CKEDITOR.instances['article_description'].setData(@json($article->description));
                                     </script>
                             </div>
+                            <div class="form-group mb-2">
+                                <label for="Department">Departamento</label>
+                                <select class="form-control" style="width: 250px" name="Department" id = "Department">
+                                @foreach($departments as $department)
+                                    <option value="{{ $department->id }}" {{ ( $department->id == $article->department_id) ? 'selected' : '' }}> 
+                                    {{ $department->name }} 
+                                     </option>
+                                @endforeach  
+                                </select>
+                            </div>
                             <br>
                             <div>
 

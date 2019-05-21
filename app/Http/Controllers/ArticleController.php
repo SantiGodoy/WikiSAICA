@@ -154,7 +154,8 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $version =  DB::table('versions')->where('id_article', $id)->orderBy('updated_at', 'desc')->first();
         $documents = DB::table('documents')->where([['article_id', $id],['article_version', $version->id],])->get();
-        return view('articles.edit', compact('article','documents'));
+        $departments = DB::table('departments')->get(); 
+        return view('articles.edit', compact('article','documents', 'departments'));
     }
 
     /**
@@ -174,6 +175,7 @@ class ArticleController extends Controller
       $article = Article::find($id);
       $article->title = $request->get('article_title');
       $article->description = $request->get('article_description');
+      $article->department_id = $request->get('Department');
       $article->updated_by = Auth::user()->id;
       $article->allowed = false;
       $article->save();
