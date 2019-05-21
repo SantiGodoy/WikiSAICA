@@ -118,9 +118,9 @@ class VersionController extends Controller
 
         $documents = DB::table('documents')->where('article_version', $id)->delete();
 
-        $article->delete();
         $version->delete();
-
+        $article->delete();
+        
         return back();
     }
 }
