@@ -117,8 +117,6 @@ class VersionController extends Controller
         $article = Article::find($version->id_article);
 
         $documents = DB::table('documents')->where('article_version', $id)->delete();
-        Article::find($version->id_article)->delete();
-        //Eliminar los documentos asociados a esa version
 
         $article->delete();
         $version->delete();
