@@ -120,6 +120,7 @@ class VersionController extends Controller
         //Eliminar los documentos asociados a esa version
 
         $article->delete();
+        $version->delete();
 
         return back();
     }
