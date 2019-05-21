@@ -105,7 +105,7 @@ class AdminController extends Controller
                   //  unlink(storage_path('app/documents/'.$document));
                     DB::table('documents')->where([['article_id', $id],['article_version', null],])->delete();
                 }
-            } 
+            }
 
             $article->delete();
         }
