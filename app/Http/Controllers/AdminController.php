@@ -24,6 +24,26 @@ class AdminController extends Controller
         return view('admin.index', compact('articles', 'user'));
     }
 
+    public function show($a){
+
+      for($i = 0; $i < 9; $i++){
+        $stats[$i] =  DB::table('articles')->where('department_id', $i)->count();
+      }
+      $i = 1;
+      $n_user = DB::table('users')->count();
+
+      $users = DB::table('articles')->select(DB::raw('id_user, count(id) as articlesNumber'))
+      ->groupBy('id_user')->limit(10)->get();
+
+      for($i = 0; $i < sizeof($users); $i++){
+        $name = DB::table('users')->select('name')->where('id', $users[$i]->id_user)->get();
+        $users[$i]->id_user = $name[0]->name;
+      }
+    
+
+      return view('admin.stats', compact('stats', 'users'));
+    }
+
      /**
      * Show the form for editing the specified resource.
      *
